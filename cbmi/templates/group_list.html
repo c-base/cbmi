@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+            <h2>members of {{ group.name }}</h2>
+                <div class="alert alert-info">
+                    diese liste enth&auml;lt nur gruppenmitglieder, die sich mindestens einmal angemeldet haben.
+                </div>
+                {% for u in group.user_set.all %}
+                    <label class="label label-info">{{ u }}</label>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

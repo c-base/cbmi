@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+            </div>
+        </div>
+        <div class="row">
+            <div class="span">
+                <form class="form" action="/account/login/?next={{ redirect_to }}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input class="btn" type="submit" value="login"/>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

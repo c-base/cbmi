@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+            <h2>{{ request.user.username }}</h2>
+                {% for g in request.user.groups.all %}
+                        {% if g.name == "ceymaster" %}
+                            <a href="/groups/{{ g }}">
+                                <label class="label label-important">{{ g }}</label>
+                            </a>
+                        {% elif "cey" in g.name %}
+                            <a href="/groups/{{ g }}">
+                                <label class="label label-warning">{{ g }}</label>
+                            </a>
+                        {% elif g.name == "ldap_admins" %}
+                            <a href="/groups/{{ g }}">
+                                <label class="label label-success">{{ g }}</label>
+                            </a>
+                        {% else %}
+                            <a href="/groups/{{ g }}">
+                                <label class="label">{{ g }}</label>
+                            </a>
+                    {% endif %}
+                {% empty %}
+                    no groups...
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock body %}
