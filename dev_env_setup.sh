@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 virtualenv cbmi
 cd cbmi
 source bin/activate
