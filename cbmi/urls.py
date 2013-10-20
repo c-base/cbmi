@@ -6,6 +6,9 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^cbapi/', include("cbapi_ldap.urls")),
+
     url(r'account/', include('account.urls')),
     url(r'^groups/(?P<group_name>[^/]+)/', 'cbmi.views.groups_list'),
     url(r'^$', 'cbmi.views.landingpage')
