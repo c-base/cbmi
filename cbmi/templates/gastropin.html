@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+            <h2>Gastro-Pin</h2>
+                {% if message %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% endif %}
+                <form action="/gastropin/" method="post">
+                    {{ form.non_field_errors }}
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
