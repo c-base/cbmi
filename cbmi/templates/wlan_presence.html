@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block container %}
+<div class="row">
+    <div class="span12">
+    <h2>{% trans "WiFi Presence"%}</h2>
+    <p>{% blocktrans %}The WiFi Presence automatically logs you in
+        to the c-base presence system when you connect a device to the Crew-Wifi
+        (SSID: c-base-crew) with your username and password.{% endblocktrans %}</p>
+
+    {% if message %}
+    <div class="alert alert-success">{{ message }}</div>
+    {% endif %}
+
+    {{ form.non_field_errors }}
+
+    <form action="{% url cbmi.views.wlan_presence %}" method="post" class="form-horizontal well">
+
+        {% csrf_token %}
+        <div class="control-group">
+            <label class="control-label" for="if_presence">{% trans "WLAN-Presence" %}</label>
+            <div>
+                {{ form.presence.errors }}
+                </div>
+            <div class="controls">
+
+                <label class="checkbox">
+                    {{ form.presence }}
+{#                    <input name="presence" value="1" id="id_presence" type="checkbox"#}
+{#                           {% if form.presence.value %}checked="checked"{% endif %} /> {% trans "aktivieren?" %}#}
+                </label>
+
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary">Speichern</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+{% endblock container %}

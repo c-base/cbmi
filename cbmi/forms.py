@@ -19,3 +19,8 @@ class GastroPinField(forms.CharField):
 
 class GastroPinForm(forms.Form):
     gastropin = GastroPinField()
+
+
+class WlanPresenceForm(forms.Form):
+    # Boolean fields must never be required.
+    presence = forms.BooleanField(required=False)

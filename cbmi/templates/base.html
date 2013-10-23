@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -63,6 +64,17 @@
 <br/>
 {% block body %}
     <div class="container">
+        <ul class="nav nav-tabs">
+            {% url cbmi.views.landingpage as landing_page_url %}
+            <li class="{% if request.path == landing_page_url %}active{% endif %}">
+                <a href="{{ landing_page_url }}">{% trans "Home" %}</a>
+            </li>
+            {% url cbmi.views.wlan_presence as wlan_presence_url %}
+            <li class="{% if request.path == wlan_presence_url %}active{% endif %}">
+                <a href="{{ wlan_presence_url }}">{% trans "WLAN Presence" %}</a>
+            </li>
+        </ul>
+    {% block container %}
         <div class="row">
             <div class="span12">
                 <div class="well">
@@ -79,7 +91,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    {% endblock container %}
+    </div><!-- /.container -->
 {% endblock body %}
 <script src="/static/js/bootstrap.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>

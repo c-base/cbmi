@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
@@ -6,9 +9,8 @@ from django.contrib.auth.models import User
 
 from account.forms import LoginForm
 
-
 def auth_login(request):
-    redirect_to = request.REQUEST.get('next', '') or '/'
+    redirect_to = request.GET.get('next', '') or '/'
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -18,20 +20,26 @@ def auth_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    member, created = User.objects.get_or_create(
-                        username=username)
+                    member, created = \
+                        User.objects.get_or_create(username=username)
                     if created:
                         member.save()
-                    return HttpResponseRedirect(redirect_to)
+                    # save password in the session for later use with LDAP
+                    request.session['ldap_password'] = password
+                    response = HttpResponseRedirect(redirect_to)
+                    response.set_cookie('sessionkey', 'bla')
+                    return response
             else:
                 print 'user is none'
     else:
         form = LoginForm()
-    return render_to_response('login.html',
-                              RequestContext(request, locals()))
 
+    return render_to_response('login.html',
+            RequestContext(request, locals()))
 
 def auth_logout(request):
-    redirect_to = request.REQUEST.get('next', '') or '/'
+    redirect_to = request.GET.get('next', '') or '/'
     logout(request)
-    return HttpResponseRedirect(redirect_to)
+    response = HttpResponseRedirect(redirect_to)
+    response.delete_cookie('sessionkey')
+    return response
