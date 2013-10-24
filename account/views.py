@@ -12,7 +12,8 @@ from django.contrib.auth.models import Group
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
-from forms import GastroPinForm, WlanPresenceForm, LoginForm, PaswordForm, RFIDForm
+from forms import GastroPinForm, WlanPresenceForm, LoginForm, PaswordForm, \
+    RFIDForm, NRF24Form
 from cbase_members import MemberValues, retrieve_member
 
 def auth_login(request):
@@ -95,6 +96,9 @@ def gastropin(request):
 
 
 def set_ldap_field(request, form_type, field_names, template_name):
+    """
+    Abstract view for each of the different forms.
+    """
     member = retrieve_member(request)
     initial = {}
 
@@ -118,7 +122,6 @@ def set_ldap_field(request, form_type, field_names, template_name):
         form = form_type(initial=initial)
         return render(request, template_name, {'form': form})
 
-
 @login_required
 def wlan_presence(request):
     return set_ldap_field(request, WlanPresenceForm,
@@ -127,5 +130,9 @@ def wlan_presence(request):
 @login_required
 def rfid(request):
     return set_ldap_field(request, RFIDForm, [('rfid', 'rfid')], 'rfid.html')
+
+@login_required
+def nrf24(request):
+    return set_ldap_field(request, NRF24Form, [('nrf24', 'nrf24')], 'nrf24.html')
 
 

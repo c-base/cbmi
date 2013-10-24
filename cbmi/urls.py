@@ -11,6 +11,6 @@ urlpatterns = patterns('',
 
     url(r'account/', include('account.urls')),
 
-    url(r'^$', 'cbmi.views.landingpage'),
+    url(r'^$', 'account.views.landingpage'),
 
 )

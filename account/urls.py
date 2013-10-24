@@ -8,5 +8,6 @@ urlpatterns = patterns(
     url(r'^gastropin/$', 'account.views.gastropin', name='gastropin'),
     url(r'^wlan_presence/$', 'account.views.wlan_presence', name='wlan_presence'),
     url(r'^rfid/$', 'account.views.rfid', name='rfid'),
+    url(r'^nrf24/$', 'account.views.nrf24', name='rfid'),
     url(r'^groups/(?P<group_name>[^/]+)/', 'account.views.groups_list'),
 )
