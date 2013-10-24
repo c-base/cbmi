@@ -1,3 +1,5 @@
 *.pyc
 .idea
 local_settings.py
+build
+*.sqlite3

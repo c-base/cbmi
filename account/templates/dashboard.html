@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
-{% block body %}
-    <div class="container">
+{% block container %}
         <div class="row">
             <div class="span12">
                 <h2>{{ request.user.username }}</h2>
@@ -29,5 +28,4 @@
                 {% endfor %}
             </div>
         </div>
-    </div>
-{% endblock body %}
+{% endblock container %}

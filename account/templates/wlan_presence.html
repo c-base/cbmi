@@ -1,0 +1,25 @@
+{% extends "form_base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block form_title %}{% trans "WiFi Presence"%}{% endblock %}
+
+{% block form_description %}
+    <p>{% blocktrans %}The WiFi Presence automatically logs you in
+    to the c-base presence system when you connect a device to the Crew-Wifi
+    (SSID: c-base-crew) with your username and password.{% endblocktrans %}</p>
+{% endblock %}
+
+{% block form_fields %}
+    {{ form.non_field_errors }}
+    <form action="{% url account.views.wlan_presence %}" method="post" class="form-horizontal well">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary">Speichern</button>
+            </div>
+        </div>
+    </form>
+{% endblock form_fields %}
