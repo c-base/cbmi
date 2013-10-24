@@ -1,0 +1,51 @@
+{% extends "member_base.html" %}
+{% load i18n %}
+
+{% block container %}
+    <div class="row">
+        <div class="span12">
+            <h2>{% trans "Welcome to the c-base member interface" %}</h2>
+            <p class="lead">{% blocktrans %}Here you can change
+            some parameters of your c-base member account.{% endblocktrans %}</p>
+
+            <h3>{% trans "Basic information about your account" %}</h3>
+
+            <ul>
+
+                <li>{% trans "Your user ID:" %}
+                    <code>{{ member.uid }}</code></li>
+                <li>{% trans "Numeric user ID:" %}
+                    <code>{{ member.uidNumber }}</code><br />
+                    <span class="muted">{% blocktrans %}The numeric user ID can be used to login with
+                    the vending machines and network connected combination
+                    locks.{% endblocktrans %}</span></li>
+                <li>
+                    {% trans "Your c-base e-mail address:" %}
+                    <code>{{ member.mail }}</code>
+                </li>
+            </ul>
+
+            <h3>{% trans "Management information" %}</h3>
+
+            <ul>
+                <li>{% trans "Name:" %}
+                    {{ member.displayName }}
+                </li>
+                <li>
+                    {% trans "External e-mail address:" %}
+                    {{ member.externalEmail }}<br>
+                    <span class="muted">{% blocktrans %}The external e-mail address is used by the
+                    board of c-base to reach you in cases where your c-base
+                    address (see above) is not working. To change your
+                    externe e-mail address please contact the c-base board
+                    (<a href="mailto:vorstand@c-base.org">vorstand@c-base.org</a>).{% endblocktrans %}</span>
+                </li>
+                <li>
+                    {% trans "Your c-base member account balance:" %}
+                    <a class="btn btn-small" href="https://vorstand.c-base.org/member/">{% trans "Check balance" %}</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+{% endblock container %}

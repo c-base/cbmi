@@ -32,7 +32,13 @@ class MemberValues(object):
         self._new = copy.deepcopy(self._old)
 
     def get(self, key, default=None):
-        value = self._new.get(key, default)[0]
+        value_list = self._new.get(key, default)
+        if value_list:
+            value = value_list[0]
+        else:
+            value = default
+
+        # Decode
         if value == 'TRUE':
             return True
         elif value == 'FALSE':
@@ -77,6 +83,12 @@ class MemberValues(object):
         print "modattrs: ",mod_attrs
         result = l.modify_s(dn, mod_attrs)
         print "result is: ", result
+
+    def to_dict(self):
+        result = {}
+        for key, value in self._new.items():
+            result[key] = self.get(key)
+        return result
 
     def _get_bind_dn(self):
         """
