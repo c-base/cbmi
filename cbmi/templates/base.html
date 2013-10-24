@@ -69,9 +69,13 @@
             <li class="{% if request.path == landing_page_url %}active{% endif %}">
                 <a href="{{ landing_page_url }}">{% trans "Home" %}</a>
             </li>
-            {% url cbmi.views.wlan_presence as wlan_presence_url %}
+            {% url account.views.wlan_presence as wlan_presence_url %}
             <li class="{% if request.path == wlan_presence_url %}active{% endif %}">
                 <a href="{{ wlan_presence_url }}">{% trans "WLAN Presence" %}</a>
+            </li>
+            {% url account.views.rfid as rfid_url %}
+            <li class="{% if request.path == rfid_url %}active{% endif %}">
+                <a href="{{ rfid_url }}">{% trans "RFID" %}</a>
             </li>
         </ul>
     {% block container %}

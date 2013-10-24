@@ -176,6 +176,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'jsonrpc',
+    'crispy_forms',
     'cbmi',
     'account',
     'cbapi_ldap',
@@ -210,7 +211,11 @@ LOGGING = {
     }
 }
 
-# LOGIN_URL = '/account/login'
+CRISPY_TEMPLATE_PACK = 'bootstrap'
+
+# c-base specific settings
+CBASE_LDAP_URL = 'ldap://lea.cbrp3.c-base.org:389/'
+CBASE_BASE_DN = 'ou=crew,dc=c-base,dc=org'
 
 try:
     from local_settings import *

@@ -10,10 +10,7 @@ urlpatterns = patterns('',
     url(r'^cbapi/', include("cbapi_ldap.urls")),
 
     url(r'account/', include('account.urls')),
-    url(r'^groups/(?P<group_name>[^/]+)/', 'cbmi.views.groups_list'),
-    url(r'^$', 'cbmi.views.landingpage'),
-    url(r'^gastropin/$', 'cbmi.views.gastropin', name='gastropin'),
 
-    url(r'^wlan_presence/$', 'cbmi.views.wlan_presence', name='wlan_presence'),
+    url(r'^$', 'cbmi.views.landingpage'),
 
 )
