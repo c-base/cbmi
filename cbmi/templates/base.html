@@ -77,6 +77,10 @@
             <li class="{% if request.path == rfid_url %}active{% endif %}">
                 <a href="{{ rfid_url }}">{% trans "RFID" %}</a>
             </li>
+            {% url account.views.nrf24 as nrf24_url %}
+            <li class="{% if request.path == nrf24_url %}active{% endif %}">
+                <a href="{{ nrf24_url }}">{% trans "NRF24" %}</a>
+            </li>
         </ul>
     {% block container %}
         <div class="row">

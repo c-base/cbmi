@@ -43,3 +43,6 @@ class RFIDForm(forms.Form):
     rfid = forms.CharField(max_length=255, help_text=_('Your RFID'))
 
 
+class NRF24Form(forms.Form):
+    nrf24 = forms.CharField(max_length=255,
+        help_text=_('Your NRF24 identification'))
