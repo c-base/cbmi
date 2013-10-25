@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
 
 {% block body %}
     <div class="container">
@@ -7,13 +9,22 @@
             </div>
         </div>
         <div class="row">
-            <div class="span">
-                <form class="form" action="/account/login/?next={{ redirect_to }}" method="post">
+            <div class="span11 well">
+                <h3>Login</h3>
+                <form class="form form-horizontal" action="/account/login/?next={{ redirect_to }}" method="post">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <input class="btn" type="submit" value="login"/>
+                    {{ form|crispy }}
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">{% trans "Login" %}</button>
+                        </div>
+                    </div>
                 </form>
             </div>
+        </div>
+        <hr />
+        <div class="row pull-right">
+            <small class="muted">Copyright &copy; 2013 by c-base e.V.</small>
         </div>
     </div>
 {% endblock body %}

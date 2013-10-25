@@ -32,7 +32,7 @@ class WlanPresenceForm(forms.Form):
             help_text=_('Enable WiFi presence?'))
 
 
-class PaswordForm(forms.Form):
+class PasswordForm(forms.Form):
     password1 = forms.CharField(max_length=255, widget=forms.PasswordInput,
         help_text=_('New password'))
     password2 = forms.CharField(max_length=255, widget=forms.PasswordInput,
@@ -43,6 +43,14 @@ class RFIDForm(forms.Form):
     rfid = forms.CharField(max_length=255, help_text=_('Your RFID'))
 
 
+class SIPPinForm(forms.Form):
+    sippin = forms.CharField(max_length=255, help_text=_('Your SIP PIN'))
+
+
 class NRF24Form(forms.Form):
     nrf24 = forms.CharField(max_length=255,
         help_text=_('Your NRF24 identification'))
+
+
+class CLabPinForm(forms.Form):
+    c_lab_pin = GastroPinField(help_text=_('Your c-lab PIN'))

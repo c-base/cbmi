@@ -12,9 +12,33 @@ from django.contrib.auth.models import Group
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
-from forms import GastroPinForm, WlanPresenceForm, LoginForm, PaswordForm, \
-    RFIDForm, NRF24Form
+from forms import GastroPinForm, WlanPresenceForm, LoginForm, PasswordForm, \
+    RFIDForm, NRF24Form, SIPPinForm, CLabPinForm
 from cbase_members import MemberValues, retrieve_member
+
+
+def landingpage(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/account')
+    form = LoginForm()
+    is_ceymaster = is_admin = False
+    if 'ceymaster' in [g.name for g in request.user.groups.all()]:
+        is_ceymaster = True
+    if 'ldap_admins' in [g.name for g in request.user.groups.all()]:
+        is_admin = True
+    groups = Group.objects.all()
+    admins = Group.objects.get(name="ldap_admins").user_set.all()
+
+    # values = get_user_values(request.user.username, request.session['ldap_password'])
+    #return render_to_response("dashboard.html", locals())
+    return render(request, 'base.html', {'form': form, 'admins': admins})
+
+@login_required
+def home(request):
+    member = retrieve_member(request)
+    context = {'member': member.to_dict()}
+    print context
+    return render(request, 'start.html', context)
 
 def auth_login(request):
     redirect_to = request.GET.get('next', '') or '/'
@@ -44,25 +68,13 @@ def auth_login(request):
     return render_to_response('login.html',
             RequestContext(request, locals()))
 
+@login_required
 def auth_logout(request):
     redirect_to = request.GET.get('next', '') or '/'
     logout(request)
     response = HttpResponseRedirect(redirect_to)
     response.delete_cookie('sessionkey')
     return response
-
-def landingpage(request):
-    is_ceymaster = is_admin = False
-    if 'ceymaster' in [g.name for g in request.user.groups.all()]:
-        is_ceymaster = True
-    if 'ldap_admins' in [g.name for g in request.user.groups.all()]:
-        is_admin = True
-    groups = Group.objects.all()
-    admins = Group.objects.get(name="ldap_admins").user_set.all()
-    if request.user.is_authenticated():
-        # values = get_user_values(request.user.username, request.session['ldap_password'])
-        return render_to_response("dashboard.html", locals())
-    return render_to_response("base.html", locals())
 
 @login_required(redirect_field_name="/" ,login_url="/account/login/")
 def groups_list(request, group_name):
@@ -76,24 +88,13 @@ def groups_list(request, group_name):
 
 @login_required
 def gastropin(request):
-    if request.method == 'POST':
-        form = GastroPinForm(request.POST)
-        if form.is_valid():
-            user = request.user
-            user_profile = user.get_profile()
-            user_profile.gastropin = form.cleaned_data['gastropin']
-            user_profile.save()
-            return render(request, 'gastropin.html',
-                {'message': _('Your Gastro-PIN was changed. Thank you!'),
-                 'form:': form})
-        else:
-            return render(request, 'gastropin.html', {'form:': form})
+    return set_ldap_field(request, GastroPinForm,
+        [('gastropin', 'gastropin')], 'gastropin.html')
 
-    else:
-        form = GastroPinForm()
-
-    return render(request, 'gastropin.html', {'form': form})
-
+@login_required
+def sippin(request):
+    return set_ldap_field(request, SIPPinForm, [('sippin', 'sippin')],
+        'sippin.html')
 
 def set_ldap_field(request, form_type, field_names, template_name):
     """
@@ -112,15 +113,17 @@ def set_ldap_field(request, form_type, field_names, template_name):
             member.save()
             new_form = form_type(initial=initial)
             return render(request, template_name,
-                {'message': _('Your changes have been saved. Thank you!'),
-                 'form': new_form})
+                    {'message': _('Your changes have been saved. Thank you!'),
+                     'form': new_form, 'member': member.to_dict()})
         else:
-            return render(request, template_name, {'form:': form})
+            return render(request, template_name,
+                    {'form:': form, 'member': member.to_dict()})
     else:
         for form_field, ldap_field in field_names:
             initial[form_field] = member.get(ldap_field)
         form = form_type(initial=initial)
-        return render(request, template_name, {'form': form})
+        return render(request, template_name,
+                {'form': form, 'member': member.to_dict()})
 
 @login_required
 def wlan_presence(request):
@@ -135,4 +138,13 @@ def rfid(request):
 def nrf24(request):
     return set_ldap_field(request, NRF24Form, [('nrf24', 'nrf24')], 'nrf24.html')
 
+@login_required
+def password(request):
+    return set_ldap_field(request, PasswordForm, [('password1', 'password')],
+            'password.html')
+
+@login_required
+def clabpin(request):
+    return set_ldap_field(request, CLabPinForm, [('c_lab_pin', 'c-labPIN')],
+            'clabpin.html')
 

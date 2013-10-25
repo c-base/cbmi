@@ -1,20 +1,28 @@
-{% extends "base.html" %}
+{% extends "form_base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
 
-{% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="span12">
-            <h2>Gastro-Pin</h2>
-                {% if message %}
-                    <div class="alert alert-success">{{ message }}</div>
-                {% endif %}
-                <form action="/gastropin/" method="post">
-                    {{ form.non_field_errors }}
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+{% block form_title %}{% trans "Gastro PIN"%}{% endblock %}
+
+{% block form_description %}
+
+    <p>{% blocktrans %}Change your Gastro PIN to access the vending machines.
+        To use unlock member prices, press the <code>A</code> button then enter
+        your numeric user ID{% endblocktrans %}
+        <code>{{ member.uidNumber }}</code>
+        {% blocktrans %}and your Gastro PIN.{% endblocktrans %}</p>
+{% endblock %}
+
+{% block form_fields %}
+    {{ form.non_field_errors }}
+    <form action="{% url account.views.gastropin %}" method="post" class="form-horizontal well">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary">{% trans "Save"%}</button>
             </div>
         </div>
-    </div>
-{% endblock %}
+    </form>
+{% endblock form_fields %}
