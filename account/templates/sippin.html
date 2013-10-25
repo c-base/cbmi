@@ -9,7 +9,6 @@
 {% endblock %}
 
 {% block form_fields %}
-    {{ form.non_field_errors }}
     <form action="{% url account.views.sippin %}" method="post" class="form-horizontal well">
         {% csrf_token %}
         {{ form|crispy }}

@@ -33,13 +33,6 @@ def landingpage(request):
     #return render_to_response("dashboard.html", locals())
     return render(request, 'base.html', {'form': form, 'admins': admins})
 
-@login_required
-def home(request):
-    member = retrieve_member(request)
-    context = {'member': member.to_dict()}
-    print context
-    return render(request, 'start.html', context)
-
 def auth_login(request):
     redirect_to = request.GET.get('next', '') or '/'
     if request.method == 'POST':
@@ -47,7 +40,7 @@ def auth_login(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
+            user = form.login(request)
             if user is not None:
                 if user.is_active:
                     login(request, user)
@@ -55,18 +48,28 @@ def auth_login(request):
                         User.objects.get_or_create(username=username)
                     if created:
                         member.save()
+
                     # save password in the session for later use with LDAP
                     request.session['ldap_password'] = password
+                    # TODO: Change the
+
                     response = HttpResponseRedirect(redirect_to)
                     response.set_cookie('sessionkey', 'bla')
                     return response
             else:
-                print 'user is none'
+                return render(request, 'login.html', {'form': form})
     else:
         form = LoginForm()
 
     return render_to_response('login.html',
             RequestContext(request, locals()))
+
+@login_required
+def home(request):
+    member = retrieve_member(request)
+    context = {'member': member.to_dict()}
+    print context
+    return render(request, 'start.html', context)
 
 @login_required
 def auth_logout(request):
@@ -117,7 +120,7 @@ def set_ldap_field(request, form_type, field_names, template_name):
                      'form': new_form, 'member': member.to_dict()})
         else:
             return render(request, template_name,
-                    {'form:': form, 'member': member.to_dict()})
+                    {'form': form, 'member': member.to_dict()})
     else:
         for form_field, ldap_field in field_names:
             initial[form_field] = member.get(ldap_field)
@@ -145,6 +148,6 @@ def password(request):
 
 @login_required
 def clabpin(request):
-    return set_ldap_field(request, CLabPinForm, [('c_lab_pin', 'c-labPIN')],
+    return set_ldap_field(request, CLabPinForm, [('c_lab_pin1', 'c-labPIN')],
             'clabpin.html')
 

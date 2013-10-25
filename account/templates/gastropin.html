@@ -14,7 +14,6 @@
 {% endblock %}
 
 {% block form_fields %}
-    {{ form.non_field_errors }}
     <form action="{% url account.views.gastropin %}" method="post" class="form-horizontal well">
         {% csrf_token %}
         {{ form|crispy }}

@@ -5,11 +5,11 @@
 {% block form_title %}{% trans "NRF24"%}{% endblock %}
 
 {% block form_description %}
-    <p>{% blocktrans %}The NRF24 identification is used for your R0K3T!{% endblocktrans %}</p>
+    <p>{% blocktrans %}The NRF24 identification is used to interface with the
+    CCC's <a href="http://r0ket.badge.events.ccc.de/">r0ket badge</a>.{% endblocktrans %}</p>
 {% endblock %}
 
 {% block form_fields %}
-    {{ form.non_field_errors }}
     <form action="{% url account.views.nrf24 %}" method="post" class="form-horizontal well">
         {% csrf_token %}
         {{ form|crispy }}

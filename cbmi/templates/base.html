@@ -22,6 +22,13 @@
         body {
             padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
         }
+        .asteriskField {
+            color: #ff1111;
+            margin-left: 3px;
+        }
+        .formRequired {
+            margin-top: 0px;
+        }
     </style>
     <!-- link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.ico" -->
     <!-- link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -38,17 +45,19 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <span class="brand"><a href="/">{% trans "c-base Member Interface" %}</a></span>
+            <span class="brand"><a href="/"><img src="http://c-base.org/cv6/images/c-base_raumstation.gif" />
+                {% trans "Member Interface" %}</a></span>
             <div class="nav-collapse collapse">
                 <p class="navbar-text pull-left">
 
                     {% if request.user.is_authenticated %}
-                    <i class="icon-user icon-white"></i> {{ request.user.username }}{% endif %}
+                    {% endif %}
                 </p>
 
                 <div class="pull-right">
                     <ul class="nav">
                         {% if request.user.is_authenticated %}
+
                             <li><a href="/account/logout/">Logout</a></li>
                         {% else %}
                             <li><a href="/account/login/">Login</a></li>
