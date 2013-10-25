@@ -177,9 +177,9 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'jsonrpc',
     'crispy_forms',
-    'cbmi',
+    # 'cbmi',
     'account',
-    'cbapi_ldap',
+    #'cbapi_ldap',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -216,6 +216,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap'
 # c-base specific settings
 CBASE_LDAP_URL = 'ldap://lea.cbrp3.c-base.org:389/'
 CBASE_BASE_DN = 'ou=crew,dc=c-base,dc=org'
+
+#LOCALE_PATHS =
 
 try:
     from local_settings import *
