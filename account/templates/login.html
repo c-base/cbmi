@@ -9,7 +9,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="well">
+            <div class="span11 well">
+                <h3>Login</h3>
                 <form class="form form-horizontal" action="/account/login/?next={{ redirect_to }}" method="post">
                     {% csrf_token %}
                     {{ form|crispy }}
@@ -20,6 +21,10 @@
                     </div>
                 </form>
             </div>
+        </div>
+        <hr />
+        <div class="row pull-right">
+            <small class="muted">Copyright &copy; 2013 by c-base e.V.</small>
         </div>
     </div>
 {% endblock body %}

@@ -5,7 +5,12 @@
 {% block form_title %}{% trans "Gastro PIN"%}{% endblock %}
 
 {% block form_description %}
-    <p>{% blocktrans %}Change your Gastro PIN to access the vending machines.{% endblocktrans %}</p>
+
+    <p>{% blocktrans %}Change your Gastro PIN to access the vending machines.
+        To use unlock member prices, press the <code>A</code> button then enter
+        your numeric user ID{% endblocktrans %}
+        <code>{{ member.uidNumber }}</code>
+        {% blocktrans %}and your Gastro PIN.{% endblocktrans %}</p>
 {% endblock %}
 
 {% block form_fields %}

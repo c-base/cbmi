@@ -13,7 +13,7 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
 from forms import GastroPinForm, WlanPresenceForm, LoginForm, PasswordForm, \
-    RFIDForm, NRF24Form, SIPPinForm
+    RFIDForm, NRF24Form, SIPPinForm, CLabPinForm
 from cbase_members import MemberValues, retrieve_member
 
 
@@ -113,15 +113,17 @@ def set_ldap_field(request, form_type, field_names, template_name):
             member.save()
             new_form = form_type(initial=initial)
             return render(request, template_name,
-                {'message': _('Your changes have been saved. Thank you!'),
-                 'form': new_form})
+                    {'message': _('Your changes have been saved. Thank you!'),
+                     'form': new_form, 'member': member.to_dict()})
         else:
-            return render(request, template_name, {'form:': form})
+            return render(request, template_name,
+                    {'form:': form, 'member': member.to_dict()})
     else:
         for form_field, ldap_field in field_names:
             initial[form_field] = member.get(ldap_field)
         form = form_type(initial=initial)
-        return render(request, template_name, {'form': form})
+        return render(request, template_name,
+                {'form': form, 'member': member.to_dict()})
 
 @login_required
 def wlan_presence(request):
@@ -138,5 +140,11 @@ def nrf24(request):
 
 @login_required
 def password(request):
-    return set_ldap_field(request, PasswordForm, [('password1', 'password')], 'password.html')
+    return set_ldap_field(request, PasswordForm, [('password1', 'password')],
+            'password.html')
+
+@login_required
+def clabpin(request):
+    return set_ldap_field(request, CLabPinForm, [('c_lab_pin', 'c-labPIN')],
+            'clabpin.html')
 

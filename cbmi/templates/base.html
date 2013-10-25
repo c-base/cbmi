@@ -38,10 +38,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <!-- a class="brand" href="/">crew.c-base.org</a -->
+            <span class="brand"><a href="/">{% trans "c-base Member Interface" %}</a></span>
             <div class="nav-collapse collapse">
                 <p class="navbar-text pull-left">
-                    c-base member-interface {% if request.user.is_authenticated %}-&gt; {{ request.user.username }}{% endif %}
+
+                    {% if request.user.is_authenticated %}
+                    <i class="icon-user icon-white"></i> {{ request.user.username }}{% endif %}
                 </p>
 
                 <div class="pull-right">
@@ -94,7 +96,7 @@
                     {{ form|crispy }}
                     <div class="control-group">
                         <div class="controls">
-                            <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+                            <button type="submit" class="btn btn-primary">{% trans "Sign in" %}</button>
                         </div>
                     </div>
                 </form>
@@ -102,6 +104,10 @@
             </div>
         </div>
     {% endblock container %}
+    <hr />
+    <div class="row pull-right">
+        <small class="muted">Copyright &copy; 2013 by c-base e.V.</small>
+    </div>
     </div><!-- /.container -->
 {% endblock body %}
 <script src="/static/js/bootstrap.js"></script>
