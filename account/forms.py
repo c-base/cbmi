@@ -51,7 +51,7 @@ class GastroPinForm(forms.Form):
             raise forms.ValidationError(
                 _('The PINs entered were not identical.'),
                 code='not_identical')
-
+        return cleaned_data
 
 
 class WlanPresenceForm(forms.Form):

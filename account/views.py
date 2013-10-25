@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import hashlib
+from django.conf import settings
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -89,15 +91,57 @@ def groups_list(request, group_name):
         is_admin = True
     return render_to_response("group_list.html", locals())
 
-@login_required
-def gastropin(request):
-    return set_ldap_field(request, GastroPinForm,
-        [('gastropin', 'gastropin')], 'gastropin.html')
+
 
 @login_required
 def sippin(request):
     return set_ldap_field(request, SIPPinForm, [('sippin', 'sippin')],
         'sippin.html')
+
+
+def calculate_gastro_hash(pin):
+    key = settings.CBASE_GASTRO_KEY
+    bla = '%s%s' % (key, pin)
+    return hashlib.sha256(bla).hexdigest()
+
+def set_hash_field(request, form_type, in_field, out_field, hash_func,
+        template_name):
+    """
+    Abstract view for each of the different forms.
+    """
+    member = retrieve_member(request)
+    initial = {}
+
+    if request.method == 'POST':
+        form = form_type(request.POST)
+        if form.is_valid():
+            hashed_value = hash_func(form.cleaned_data[in_field])
+            member.set(out_field, hashed_value)
+            member.save()
+            new_form = form_type(initial=initial)
+            return render(request, template_name,
+                    {'message': _('Your changes have been saved. Thank you!'),
+                     'form': new_form, 'member': member.to_dict()})
+        else:
+            return render(request, template_name,
+                    {'form': form, 'member': member.to_dict()})
+    else:
+        form = form_type(initial=initial)
+        return render(request, template_name,
+                {'form': form, 'member': member.to_dict()})
+
+@login_required
+def gastropin(request):
+    return set_hash_field(request, GastroPinForm,
+        'gastropin1', 'gastroPIN', calculate_gastro_hash, 'gastropin.html')
+
+@login_required
+def password(request):
+    def hash_password(password):
+        return password
+
+    return set_ldap_field(request, PasswordForm, 'password1', 'password',
+        hash_password, 'password.html')
 
 def set_ldap_field(request, form_type, field_names, template_name):
     """
@@ -141,10 +185,7 @@ def rfid(request):
 def nrf24(request):
     return set_ldap_field(request, NRF24Form, [('nrf24', 'nrf24')], 'nrf24.html')
 
-@login_required
-def password(request):
-    return set_ldap_field(request, PasswordForm, [('password1', 'password')],
-            'password.html')
+
 
 @login_required
 def clabpin(request):
