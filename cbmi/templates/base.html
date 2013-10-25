@@ -29,6 +29,9 @@
         .formRequired {
             margin-top: 0px;
         }
+        a.brandtext {
+            margin-top: 10px;
+        }
     </style>
     <!-- link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.ico" -->
     <!-- link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
@@ -45,24 +48,25 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <span class="brand"><a href="/"><img src="http://c-base.org/cv6/images/c-base_raumstation.gif" />
-                {% trans "Member Interface" %}</a></span>
+            <span class="brand"><a href="/"><img style="margin-top: -10px;"
+                src="{{ STATIC_URL }}img/logo.gif" /></a>
+                <a href="/">{% trans "member interface" %}</a>
+            </span>
             <div class="nav-collapse collapse">
-                <p class="navbar-text pull-left">
-
-                    {% if request.user.is_authenticated %}
-                    {% endif %}
-                </p>
-
-                <div class="pull-right">
-                    <ul class="nav">
+                <ul class="nav nav-collapse collapse pull-right">
                         {% if request.user.is_authenticated %}
-
                             <li><a href="/account/logout/">Logout</a></li>
                         {% else %}
                             <li><a href="/account/login/">Login</a></li>
                         {% endif %}
                     </ul>
+                {% if request.user.is_authenticated %}
+                    <p class="navbar-text pull-right">
+                        <i class="icon icon-user icon-white"></i>
+                        {{ user.username }}
+                    </p>
+                {% endif %}
+
                 </div>
             </div>
             <!--/.nav-collapse -->
