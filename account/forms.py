@@ -135,8 +135,10 @@ class AdminForm(forms.Form):
         self._request = kwargs.pop('request', None)
         self._users = kwargs.pop('users', [])
         choices = [(x, x) for x in self._users]
+        choices.insert(0, ('', 'Select username ...'))
         super(AdminForm, self).__init__(*args, **kwargs)
-        self.fields['username'] = forms.ChoiceField(choices=choices)
+        self.fields.insert(0, 'username', forms.ChoiceField(choices=choices,
+            help_text=_('Select the username for whom you want to reset the password.')))
 
     def clean(self):
         cleaned_data = super(AdminForm, self).clean()
