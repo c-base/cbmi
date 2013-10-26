@@ -1,0 +1,29 @@
+{% extends "form_base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block form_title %}{% trans "RFID"%}{% endblock %}
+
+{% block form_description %}
+    <p>{% blocktrans %}A Radio Frequency Identification (RFID) tag can be used
+    to announce your presence to other c-base members when you arrive.
+    Place your RFID tag on the RFID reader in the airlock terminal.
+    If you configured your RFID correctly, the airlock terminal will greet
+    you and show additional information. If you place your RFID tag in the
+    reader again when leaving, you will be logged out.{% endblocktrans %}</p>
+{% endblock %}
+
+{% block form_fields %}
+    {{ form.non_field_errors }}
+    <form action="{% url account.views.rfid %}" method="post"
+          class="form-horizontal well">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary">Speichern</button>
+            </div>
+        </div>
+    </form>
+{% endblock form_fields %}

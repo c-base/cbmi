@@ -88,6 +88,16 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.request"
+)
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -165,8 +175,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'cbmi',
+    'jsonrpc',
+    'crispy_forms',
+    # 'cbmi',
     'account',
+    #'cbapi_ldap',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -197,3 +210,19 @@ LOGGING = {
         },
     }
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap'
+
+# c-base specific settings
+CBASE_LDAP_URL = 'ldap://lea.cbrp3.c-base.org:389/'
+CBASE_BASE_DN = 'ou=crew,dc=c-base,dc=org'
+
+# Set session cookie timeout to 10 minutes
+SESSION_COOKIE_AGE = 600
+LOGIN_URL = '/account/login/'
+#LOCALE_PATHS =
+
+try:
+    from local_settings import *
+except ImportError, e:
+    print 'Unable to load local_settings.py:', e
