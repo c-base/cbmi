@@ -100,11 +100,14 @@ class MemberValues(object):
             result[key] = self.get(key)
         return result
 
-    def _get_bind_dn(self):
+    def _get_bind_dn(self, username=None):
         """
         Adds the uid=userid, to the base dn and returns that.
         """
-        bind_dn = 'uid=%s,' % self._username
+        if not username:
+            bind_dn = 'uid=%s,' % self._username
+        else:
+            bind_dn = 'uid=%s,' % username
         bind_dn += settings.CBASE_BASE_DN
         return bind_dn
 
@@ -128,5 +131,39 @@ class MemberValues(object):
         # TODO: latin1
         print "result is: ", result
         # TODO: if len(result)==0
-        return result[0][1]
         session.unbind_s()
+        return result[0][1]
+
+    def admin_change_password(self, username, new_password):
+        """
+        Change the password of the member.
+        You do not need to call save() after calling change_password().
+        """
+        l = ldap.initialize(settings.CBASE_LDAP_URL)
+        user_dn = self._get_bind_dn()
+        l.simple_bind_s(user_dn, self._password)
+        l.passwd_s(self._get_bind_dn(username), None, new_password)
+        l.unbind_s()
+
+    def list_users(self):
+        l = ldap.initialize(settings.CBASE_LDAP_URL)
+        user_dn = self._get_bind_dn()
+        l.simple_bind_s(user_dn, self._password)
+        try:
+            ldap_result_id = l.search(settings.CBASE_BASE_DN, ldap.SCOPE_SUBTREE, "memberOf=cn=crew,ou=groups,dc=c-base,dc=org", None)
+            result_set = []
+            while 1:
+                result_type, result_data = l.result(ldap_result_id, 0)
+                if (result_data == []):
+                    break
+                else:
+                    ## here you don't have to append to a list
+                    ## you could do whatever you want with the individual entry
+                    ## The appending to list is just for illustration.
+                    if result_type == ldap.RES_SEARCH_ENTRY:
+                        result_set.append(result_data)
+
+            userlist = [x[0][1]['uid'][0] for x in result_set]
+            return sorted(userlist)
+        except:
+            return []

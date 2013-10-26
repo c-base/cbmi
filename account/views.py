@@ -18,7 +18,7 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
 from forms import GastroPinForm, WlanPresenceForm, LoginForm, PasswordForm, \
-    RFIDForm, NRF24Form, SIPPinForm, CLabPinForm
+    RFIDForm, NRF24Form, SIPPinForm, CLabPinForm, AdminForm
 from cbase_members import retrieve_member
 
 def landingpage(request):
@@ -31,7 +31,10 @@ def landingpage(request):
     if 'ldap_admins' in [g.name for g in request.user.groups.all()]:
         is_admin = True
     groups = Group.objects.all()
-    admins = Group.objects.get(name="ldap_admins").user_set.all()
+    try:
+        admins = Group.objects.get(name="ldap_admins").user_set.all()
+    except:
+        admins = []
 
     # values = get_user_values(request.user.username, request.session['ldap_password'])
     #return render_to_response("dashboard.html", locals())
@@ -137,6 +140,9 @@ def gastropin(request):
 
 @login_required
 def clabpin(request):
+    if request.user.groups.filter(name='cey-c-lab').count() == 0:
+        return render(request, 'access_denied.html')
+
     def calculate_clab_hash(pin):
         salt = os.urandom(12)
         digest = hashlib.sha1(bytearray(pin, 'UTF-8')+salt).digest()
@@ -215,6 +221,30 @@ def rfid(request):
 def nrf24(request):
     return set_ldap_field(request, NRF24Form, [('nrf24', 'nrf24')], 'nrf24.html')
 
+@login_required
+def admin(request):
+    member = retrieve_member(request)
+    if request.user.groups.filter(name='ldap_admins').count() == 0:
+        return render(request, 'access_denied.html')
+    users = member.list_users()
+    if request.method == 'POST':
+        form = AdminForm(request.POST, request=request, users=users)
 
+        if form.is_valid():
+            new_password = form.cleaned_data['password1']
+            member.admin_change_password(form.cleaned_data['username'], new_password)
+            new_form = AdminForm(request=request, users=users)
+            return render(request, 'admin.html',
+                {'message': _('The password for %s was changed. Thank you!' % form.cleaned_data['username']),
+                 'form': new_form})
+        else:
+            return render(request, 'admin.html',
+                {'form': form})
+    else:
+        form = AdminForm(request=request, users=users)
+        return render(request, 'admin.html',
+            {'form': form})
 
-
+    #username = cleaned_data.get('username')
+    #admin_username = self._request.user.username
+    #admin_password = self._request.session['ldap_password']
