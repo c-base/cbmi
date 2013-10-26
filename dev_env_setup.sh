@@ -5,7 +5,7 @@ set -e
 virtualenv cbmi
 cd cbmi
 source bin/activate
-git clone git@dev.c-base.org:cbmi/cbmi.git src
+git clone git@github.com/c-base/cbmi.git
 cd src
 pip install -r requirements.txt
 
