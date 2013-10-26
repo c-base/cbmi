@@ -122,3 +122,33 @@ class CLabPinForm(forms.Form):
     c_lab_pin1 = GastroPinField(label=_('New c-lab PIN'))
     c_lab_pin2 = GastroPinField(label=_('Repeat c-lab PIN'),
             help_text=_('Numerical only, 4 to 6 digits'))
+
+
+class AdminForm(forms.Form):
+    password1 = forms.CharField(max_length=255, widget=forms.PasswordInput,
+        label=_('New password'))
+    password2 = forms.CharField(max_length=255, widget=forms.PasswordInput,
+        label=_('Repeat password'))
+
+
+    def __init__(self, *args, **kwargs):
+        self._request = kwargs.pop('request', None)
+        self._users = kwargs.pop('users', [])
+        choices = [(x, x) for x in self._users]
+        super(AdminForm, self).__init__(*args, **kwargs)
+        self.fields['username'] = forms.ChoiceField(choices=choices)
+
+    def clean(self):
+        cleaned_data = super(AdminForm, self).clean()
+
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
+        if password1 != password2:
+            raise forms.ValidationError(
+                _('The new passwords were not identical.'),
+                code='not_identical')
+
+        return cleaned_data
+
+    def get_member_choices(self):
+        return [(x, x) for x in self._users]
