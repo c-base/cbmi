@@ -61,10 +61,35 @@ class WlanPresenceForm(forms.Form):
 
 
 class PasswordForm(forms.Form):
+    old_password = forms.CharField(max_length=255, widget=forms.PasswordInput,
+        label=_('Old password'),
+        help_text=_('Enter your current password here.'))
     password1 = forms.CharField(max_length=255, widget=forms.PasswordInput,
         label=_('New password'))
     password2 = forms.CharField(max_length=255, widget=forms.PasswordInput,
         label=_('Repeat password'))
+
+    def __init__(self, *args, **kwargs):
+        self._request = kwargs.pop('request', None)
+        super(PasswordForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super(PasswordForm, self).clean()
+        old_password = cleaned_data.get('old_password')
+        username = self._request.user.username
+        user = authenticate(username=username, password=old_password)
+
+        if not user or not user.is_active:
+            raise forms.ValidationError(_('The old password was incorrect.'),
+                    code='old_password_wrong')
+
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
+        if password1 != password2:
+            raise forms.ValidationError(
+                _('The new passwords were not identical.'),
+                code='not_identical')
+        return cleaned_data
 
 
 class RFIDForm(forms.Form):

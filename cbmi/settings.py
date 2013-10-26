@@ -217,6 +217,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap'
 CBASE_LDAP_URL = 'ldap://lea.cbrp3.c-base.org:389/'
 CBASE_BASE_DN = 'ou=crew,dc=c-base,dc=org'
 
+# Set session cookie timeout to 10 minutes
+SESSION_COOKIE_AGE = 600
+LOGIN_URL = '/account/login/'
 #LOCALE_PATHS =
 
 try:

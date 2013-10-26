@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import hashlib
-from django.conf import settings
 
+import os
+import base64
+import hashlib
+
+from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
@@ -16,8 +19,7 @@ from django.utils.translation import ugettext as _
 
 from forms import GastroPinForm, WlanPresenceForm, LoginForm, PasswordForm, \
     RFIDForm, NRF24Form, SIPPinForm, CLabPinForm
-from cbase_members import MemberValues, retrieve_member
-
+from cbase_members import retrieve_member
 
 def landingpage(request):
     if request.user.is_authenticated():
@@ -69,9 +71,8 @@ def auth_login(request):
 @login_required
 def home(request):
     member = retrieve_member(request)
-    context = {'member': member.to_dict()}
-    print context
-    return render(request, 'start.html', context)
+    context = {'member': member.to_dict(), 'groups': request.user.groups.all()}
+    return render(request, 'home.html', context)
 
 @login_required
 def auth_logout(request):
@@ -91,23 +92,16 @@ def groups_list(request, group_name):
         is_admin = True
     return render_to_response("group_list.html", locals())
 
-
-
 @login_required
 def sippin(request):
     return set_ldap_field(request, SIPPinForm, [('sippin', 'sippin')],
         'sippin.html')
 
-
-def calculate_gastro_hash(pin):
-    key = settings.CBASE_GASTRO_KEY
-    bla = '%s%s' % (key, pin)
-    return hashlib.sha256(bla).hexdigest()
-
 def set_hash_field(request, form_type, in_field, out_field, hash_func,
         template_name):
     """
-    Abstract view for each of the different forms.
+    Abstract view for changing LDAP attributes that need to be hashed.
+    Takes a function that converts the value into the hashed_value.
     """
     member = retrieve_member(request)
     initial = {}
@@ -116,6 +110,7 @@ def set_hash_field(request, form_type, in_field, out_field, hash_func,
         form = form_type(request.POST)
         if form.is_valid():
             hashed_value = hash_func(form.cleaned_data[in_field])
+            print 'hashed value: ', hashed_value
             member.set(out_field, hashed_value)
             member.save()
             new_form = form_type(initial=initial)
@@ -132,20 +127,55 @@ def set_hash_field(request, form_type, in_field, out_field, hash_func,
 
 @login_required
 def gastropin(request):
+    def calculate_gastro_hash(pin):
+        key = settings.CBASE_GASTRO_KEY
+        bla = '%s%s' % (key, pin)
+        return hashlib.sha256(bla).hexdigest()
+
     return set_hash_field(request, GastroPinForm,
         'gastropin1', 'gastroPIN', calculate_gastro_hash, 'gastropin.html')
 
 @login_required
-def password(request):
-    def hash_password(password):
-        return password
+def clabpin(request):
+    def calculate_clab_hash(pin):
+        salt = os.urandom(12)
+        digest = hashlib.sha1(bytearray(pin, 'UTF-8')+salt).digest()
+        return '{SSHA}' + base64.b64encode(digest + salt)
 
-    return set_ldap_field(request, PasswordForm, 'password1', 'password',
-        hash_password, 'password.html')
+    return set_hash_field(request, CLabPinForm, 'c_lab_pin1', 'c-labPIN',
+            calculate_clab_hash, 'clabpin.html')
+
+@login_required
+def password(request):
+    """
+    """
+    member = retrieve_member(request)
+
+    if request.method == 'POST':
+        form = PasswordForm(request.POST, request=request)
+
+        if form.is_valid():
+            new_password = form.cleaned_data['password1']
+            member.change_password(new_password)
+            request.session['ldap_password'] = new_password
+            request.session.save()
+            new_form = PasswordForm()
+            return render(request, 'password.html',
+                {'message': _('Your password was changed. Thank you!'),
+                 'form': new_form, 'member': member.to_dict()})
+        else:
+            return render(request, 'password.html',
+                {'form': form, 'member': member.to_dict()})
+    else:
+        form = PasswordForm()
+        return render(request, 'password.html',
+            {'form': form, 'member': member.to_dict()})
 
 def set_ldap_field(request, form_type, field_names, template_name):
     """
     Abstract view for each of the different forms.
+
+    field_names contains the mapping of the field name in the form to
     """
     member = retrieve_member(request)
     initial = {}
@@ -187,8 +217,4 @@ def nrf24(request):
 
 
 
-@login_required
-def clabpin(request):
-    return set_ldap_field(request, CLabPinForm, [('c_lab_pin1', 'c-labPIN')],
-            'clabpin.html')
 

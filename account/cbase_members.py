@@ -60,10 +60,8 @@ class MemberValues(object):
         Save the values back to the LDAP server.
         """
         dn = "uid=%s,ou=crew,dc=c-base,dc=org" % self._username
-        print 'setting dn=', dn
 
-        # TODO: Use settings for url
-        l = ldap.initialize("ldap://lea.cbrp3.c-base.org:389/")
+        l = ldap.initialize(settings.CBASE_LDAP_URL)
         l.simple_bind_s(dn, self._password)
 
         mod_attrs = []
@@ -83,6 +81,18 @@ class MemberValues(object):
         print "modattrs: ",mod_attrs
         result = l.modify_s(dn, mod_attrs)
         print "result is: ", result
+        l.unbind_s()
+
+    def change_password(self, new_password):
+        """
+        Change the password of the member.
+        You do not need to call save() after calling change_password().
+        """
+        l = ldap.initialize(settings.CBASE_LDAP_URL)
+        user_dn = self._get_bind_dn()
+        l.simple_bind_s(user_dn, self._password)
+        l.passwd_s(user_dn, self._password, new_password)
+        l.unbind_s()
 
     def to_dict(self):
         result = {}
@@ -119,3 +129,4 @@ class MemberValues(object):
         print "result is: ", result
         # TODO: if len(result)==0
         return result[0][1]
+        session.unbind_s()

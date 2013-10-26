@@ -25,6 +25,14 @@
                 </li>
             </ul>
 
+            <h3>{% trans "Your group memberships" %}</h3>
+            {% trans "You are part of the following LDAP groups:" %}
+            <ul>
+                {% for group in groups %}
+                <li><span class="label label-info">{{ group }}</span></li>
+                {% endfor %}
+            </ul>
+
             <h3>{% trans "Management information" %}</h3>
 
             <ul>
