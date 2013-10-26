@@ -7,6 +7,8 @@ cd cbmi
 source bin/activate
 git clone git@github.com:c-base/cbmi.git src
 cd src
+git submodule init
+git submodule update
 pip install -r requirements.txt
 
 cat <<EOF

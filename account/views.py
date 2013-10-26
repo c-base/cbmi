@@ -31,7 +31,10 @@ def landingpage(request):
     if 'ldap_admins' in [g.name for g in request.user.groups.all()]:
         is_admin = True
     groups = Group.objects.all()
-    admins = Group.objects.get(name="ldap_admins").user_set.all()
+    try:
+        admins = Group.objects.get(name="ldap_admins").user_set.all()
+    except:
+        admins = []
 
     # values = get_user_values(request.user.username, request.session['ldap_password'])
     #return render_to_response("dashboard.html", locals())
