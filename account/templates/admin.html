@@ -1,0 +1,22 @@
+{% extends "form_base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block form_title %}{% trans "Admin Password"%}{% endblock %}
+
+{% block form_description %}
+    <p>{% blocktrans %}You can change other users passwords here.{% endblocktrans %}</p>
+{% endblock %}
+
+{% block form_fields %}
+    <form action="{% url account.views.admin %}" method="post" class="form-horizontal well">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary">{% trans "Save"%}</button>
+            </div>
+        </div>
+    </form>
+{% endblock form_fields %}

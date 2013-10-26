@@ -36,6 +36,14 @@
             <li class="{% if request.path == sippin_url %}active{% endif %}">
                 <a href="{{ sippin_url }}">{% trans "SIP-PIN" %}</a>
             </li>
+            {%  for group in request.user.groups.all %}
+                {%  if group.name == 'ldap_admins' %}
+                    {% url account.views.admin as admin_url %}
+                    <li class="{% if request.path == admin_url %}active{% endif %}">
+                        <a href="{{ admin_url }}">{% trans "Admin" %}</a>
+                    </li>
+                {% endif %}
+            {%  endfor %}
         </ul>
     {% block container %}{% endblock container %}
 

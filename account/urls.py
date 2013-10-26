@@ -12,6 +12,7 @@ urlpatterns = patterns(
     url(r'^password/$', 'account.views.password', name='password'),
     url(r'^sippin/$', 'account.views.sippin', name='sippin'),
     url(r'^clabpin/$', 'account.views.clabpin', name='clabpin'),
+    url(r'^admin/$', 'account.views.admin', name='admin'),
     url(r'^$', 'account.views.home', name="home"),
     url(r'^groups/(?P<group_name>[^/]+)/', 'account.views.groups_list'),
 )
