@@ -6,9 +6,9 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
-from account.views import encrypt_ldap_password, decrypt_ldap_password
+from password_encryption import encrypt_ldap_password, decrypt_ldap_password
 
-class CbmiTest(TestCase):
+class PasswordEncryptionTest(TestCase):
     """
     Test for the cbmi apps.
     """
