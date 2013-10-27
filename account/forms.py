@@ -10,7 +10,8 @@ from django.utils.translation import ugettext as _
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=255)
-    password = forms.CharField(max_length=255, widget=forms.PasswordInput)
+    password = forms.CharField(max_length=255, widget=forms.PasswordInput,
+        help_text=_('Cookies must be enabled.'))
 
     def clean(self):
         username = self.cleaned_data.get('username')
