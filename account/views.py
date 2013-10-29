@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-import base64
 import hashlib
-
 
 from django.conf import settings
 from django.http import HttpResponseRedirect
@@ -73,8 +71,9 @@ def auth_login(request):
 def home(request):
     member = retrieve_member(request)
     number_of_members = member.get_number_of_members()
-    context = {'member': member.to_dict(), 'groups': request.user.groups.all(),
-            'number_of_members': number_of_members}
+    context = {'member': member.to_dict(),
+        'groups': sorted(list(request.user.groups.all())),
+        'number_of_members': number_of_members}
     return render(request, 'home.html', context)
 
 @login_required
