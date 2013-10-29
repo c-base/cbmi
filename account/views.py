@@ -5,6 +5,7 @@ import os
 import base64
 import hashlib
 
+
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -20,6 +21,7 @@ from django.utils.translation import ugettext as _
 from forms import GastroPinForm, WlanPresenceForm, LoginForm, PasswordForm, \
     RFIDForm, NRF24Form, SIPPinForm, CLabPinForm, AdminForm
 from cbase_members import retrieve_member
+from password_encryption import *
 
 def landingpage(request):
     if request.user.is_authenticated():
@@ -36,8 +38,6 @@ def landingpage(request):
     except:
         admins = []
 
-    # values = get_user_values(request.user.username, request.session['ldap_password'])
-    #return render_to_response("dashboard.html", locals())
     return render(request, 'base.html', {'form': form, 'admins': admins})
 
 def auth_login(request):
@@ -57,11 +57,9 @@ def auth_login(request):
                         member.save()
 
                     # save password in the session for later use with LDAP
-                    request.session['ldap_password'] = password
-                    # TODO: Change the
-
+                    key = store_ldap_password(request, password)
                     response = HttpResponseRedirect(redirect_to)
-                    response.set_cookie('sessionkey', 'bla')
+                    response.set_cookie('sessionkey', key)
                     return response
             else:
                 return render(request, 'login.html', {'form': form})
@@ -74,11 +72,14 @@ def auth_login(request):
 @login_required
 def home(request):
     member = retrieve_member(request)
-    context = {'member': member.to_dict(), 'groups': request.user.groups.all()}
+    number_of_members = member.get_number_of_members()
+    context = {'member': member.to_dict(), 'groups': request.user.groups.all(),
+            'number_of_members': number_of_members}
     return render(request, 'home.html', context)
 
 @login_required
 def auth_logout(request):
+    request.session.pop(ENCRYPTED_LDAP_PASSWORD)
     redirect_to = request.GET.get('next', '') or '/'
     logout(request)
     response = HttpResponseRedirect(redirect_to)
@@ -154,6 +155,7 @@ def clabpin(request):
 @login_required
 def password(request):
     """
+    View that changes the password on the LDAP server.
     """
     member = retrieve_member(request)
 
@@ -163,12 +165,13 @@ def password(request):
         if form.is_valid():
             new_password = form.cleaned_data['password1']
             member.change_password(new_password)
-            request.session['ldap_password'] = new_password
+            key = store_ldap_password(request, new_password)
             request.session.save()
             new_form = PasswordForm()
-            return render(request, 'password.html',
+            response = render(request, 'password.html',
                 {'message': _('Your password was changed. Thank you!'),
                  'form': new_form, 'member': member.to_dict()})
+            response.set_cookie('sessionkey', key)
         else:
             return render(request, 'password.html',
                 {'form': form, 'member': member.to_dict()})

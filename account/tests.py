@@ -6,11 +6,24 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+from password_encryption import encrypt_ldap_password, decrypt_ldap_password
+
+class PasswordEncryptionTest(TestCase):
+    """
+    Test for the cbmi apps.
+    """
+    TEST_LDAP_PASSWD = 'correcthorsebatterystaple'
+
+    def encrypt_it(self):
+        return encrypt_ldap_password(self.TEST_LDAP_PASSWD)
+
+    def test_encrypt_ldap_password(self):
+        message, key = self.encrypt_it()
+        print 'key:', key
+        print 'message:', message
 
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+    def test_decrypt_ldap_password(self):
+        message, key = self.encrypt_it()
+        decrypted = decrypt_ldap_password(message, key)
+        self.assertEqual(self.TEST_LDAP_PASSWD, decrypted)

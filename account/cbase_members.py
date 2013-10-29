@@ -5,6 +5,7 @@ import ldap
 import copy
 
 from django.conf import settings
+from password_encryption import get_ldap_password
 
 """
 Example configuration:
@@ -14,8 +15,11 @@ CBASE_BASE_DN = 'ou=crew,dc=c-base,dc=org'
 """
 
 def retrieve_member(request):
-    # TODO: Put password in encrypted session storage
-    return MemberValues(request.user.username, request.session['ldap_password'])
+    ldap_password = get_ldap_password(request)
+    session = dict(request.session)
+    print "session:", session
+    print "cookies:", request.COOKIES
+    return MemberValues(request.user.username, ldap_password)
 
 
 class MemberValues(object):
@@ -80,7 +84,8 @@ class MemberValues(object):
 
         print "modattrs: ",mod_attrs
         result = l.modify_s(dn, mod_attrs)
-        print "result is: ", result
+        #
+        # print "result is: ", result
         l.unbind_s()
 
     def change_password(self, new_password):
@@ -145,15 +150,26 @@ class MemberValues(object):
         l.passwd_s(self._get_bind_dn(username), None, new_password)
         l.unbind_s()
 
+    def get_number_of_members(self):
+        """
+        Returns the total number of c-base members with active user accounts.
+        """
+        return len(self.list_users())
+
     def list_users(self):
+        """
+        Returns a list of strings with all usernames in the group 'crew'.
+        The list is sorted alphabetically.
+        """
         l = ldap.initialize(settings.CBASE_LDAP_URL)
         user_dn = self._get_bind_dn()
         l.simple_bind_s(user_dn, self._password)
         try:
-            ldap_result_id = l.search(settings.CBASE_BASE_DN, ldap.SCOPE_SUBTREE, "memberOf=cn=crew,ou=groups,dc=c-base,dc=org", None)
+            result_id = l.search(settings.CBASE_BASE_DN, ldap.SCOPE_SUBTREE,
+                    "memberOf=cn=crew,ou=groups,dc=c-base,dc=org", None)
             result_set = []
-            while 1:
-                result_type, result_data = l.result(ldap_result_id, 0)
+            while True:
+                result_type, result_data = l.result(result_id, 0)
                 if (result_data == []):
                     break
                 else:
