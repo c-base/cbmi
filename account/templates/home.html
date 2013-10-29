@@ -7,8 +7,8 @@
             <h2>{% trans "Welcome to the c-base member interface" %}</h2>
             <p class="leas">You are one of currently {{ number_of_members }}
             c-base members.</p>
-            <p>{% blocktrans %}Here you can change
-            some parameters of your c-base member account.{% endblocktrans %}</p>
+            <p>{% blocktrans %}Here you can change some parameters of your
+                c-base member account.{% endblocktrans %}</p>
 
             <h3>{% trans "Basic information about your account" %}</h3>
 
@@ -18,9 +18,9 @@
                     <code>{{ member.uid }}</code></li>
                 <li>{% trans "Numeric user ID:" %}
                     <code>{{ member.uidNumber }}</code><br />
-                    <span class="muted">{% blocktrans %}The numeric user ID can be used to login with
-                    the vending machines and network connected combination
-                    locks.{% endblocktrans %}</span></li>
+                    <span class="muted">{% blocktrans %}The numeric user ID can
+                        be used to login with the vending machines and network
+                        connected combination locks.{% endblocktrans %}</span></li>
                 <li>
                     {% trans "Your c-base e-mail address:" %}
                     <code>{{ member.mail }}</code>
