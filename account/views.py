@@ -72,7 +72,9 @@ def auth_login(request):
 @login_required
 def home(request):
     member = retrieve_member(request)
-    context = {'member': member.to_dict(), 'groups': request.user.groups.all()}
+    number_of_members = member.get_number_of_members()
+    context = {'member': member.to_dict(), 'groups': request.user.groups.all(),
+            'number_of_members': number_of_members}
     return render(request, 'home.html', context)
 
 @login_required

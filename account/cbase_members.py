@@ -150,15 +150,26 @@ class MemberValues(object):
         l.passwd_s(self._get_bind_dn(username), None, new_password)
         l.unbind_s()
 
+    def get_number_of_members(self):
+        """
+        Returns the total number of c-base members with active user accounts.
+        """
+        return len(self.list_users())
+
     def list_users(self):
+        """
+        Returns a list of strings with all usernames in the group 'crew'.
+        The list is sorted alphabetically.
+        """
         l = ldap.initialize(settings.CBASE_LDAP_URL)
         user_dn = self._get_bind_dn()
         l.simple_bind_s(user_dn, self._password)
         try:
-            ldap_result_id = l.search(settings.CBASE_BASE_DN, ldap.SCOPE_SUBTREE, "memberOf=cn=crew,ou=groups,dc=c-base,dc=org", None)
+            result_id = l.search(settings.CBASE_BASE_DN, ldap.SCOPE_SUBTREE,
+                    "memberOf=cn=crew,ou=groups,dc=c-base,dc=org", None)
             result_set = []
-            while 1:
-                result_type, result_data = l.result(ldap_result_id, 0)
+            while True:
+                result_type, result_data = l.result(result_id, 0)
                 if (result_data == []):
                     break
                 else:
