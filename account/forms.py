@@ -35,9 +35,9 @@ class GastroPinField(forms.CharField):
         """
         Check if the value is all numeric and 4 - 6 chars long.
         """
-        match = re.match(r'^\d{4,6}$', value)
+        match = re.match(r'^\d{4,8}$', value)
         if not match:
-            raise forms.ValidationError(_('PIN must be 4 to 6 digits.'))
+            raise forms.ValidationError(_('PIN must be 4 to 8 digits.'))
 
 
 class GastroPinForm(forms.Form):
@@ -47,7 +47,8 @@ class GastroPinForm(forms.Form):
     def clean(self):
         cleaned_data = super(GastroPinForm, self).clean()
         gastropin1 = cleaned_data.get("gastropin1")
-        gastropin2 = cleaned_data.get("gastropin2")
+        gastropin2 = cleaned_data.get("gastropin2",
+            help_text=_('Numerical only, 4 to 8 digits'))
         if gastropin1 != gastropin2:
             raise forms.ValidationError(
                 _('The PINs entered were not identical.'),
@@ -122,7 +123,7 @@ class NRF24Form(forms.Form):
 class CLabPinForm(forms.Form):
     c_lab_pin1 = GastroPinField(label=_('New c-lab PIN'))
     c_lab_pin2 = GastroPinField(label=_('Repeat c-lab PIN'),
-            help_text=_('Numerical only, 4 to 6 digits'))
+            help_text=_('Numerical only, 4 to 8 digits'))
 
 
 class AdminForm(forms.Form):
