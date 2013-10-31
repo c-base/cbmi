@@ -3,6 +3,7 @@
 
 import os
 import hashlib
+import smbpasswd
 
 from django.conf import settings
 from django.http import HttpResponseRedirect
@@ -163,7 +164,15 @@ def password(request):
 
         if form.is_valid():
             new_password = form.cleaned_data['password1']
+
+            # change the password for the Wifi
+            member.set('sambaLMPassword', smbpasswd.lmhash(new_password))
+            member.set('sambaNTPassword', smbpasswd.nthash(new_password))
+            member.save()
+
+            # change the LDAP password
             member.change_password(new_password)
+
             key = store_ldap_password(request, new_password)
             request.session.save()
             new_form = PasswordForm()
@@ -171,6 +180,7 @@ def password(request):
                 {'message': _('Your password was changed. Thank you!'),
                  'form': new_form, 'member': member.to_dict()})
             response.set_cookie('sessionkey', key)
+            return response
         else:
             return render(request, 'password.html',
                 {'form': form, 'member': member.to_dict()})
