@@ -19,7 +19,7 @@ from django.utils.translation import ugettext as _
 
 from forms import GastroPinForm, WlanPresenceForm, LoginForm, PasswordForm, \
     RFIDForm, NRF24Form, SIPPinForm, CLabPinForm, AdminForm
-from cbase_members import retrieve_member
+from cbase_members import retrieve_member, MemberValues
 from password_encryption import *
 
 def landingpage(request):
@@ -235,16 +235,22 @@ def nrf24(request):
 
 @login_required
 def admin(request):
-    member = retrieve_member(request)
+    admin_member = retrieve_member(request)
     if request.user.groups.filter(name='ldap_admins').count() == 0:
         return render(request, 'access_denied.html')
-    users = member.list_users()
+    users = admin_member.list_users()
     if request.method == 'POST':
         form = AdminForm(request.POST, request=request, users=users)
 
         if form.is_valid():
             new_password = form.cleaned_data['password1']
-            member.admin_change_password(form.cleaned_data['username'], new_password)
+            admin_member.admin_change_password(form.cleaned_data['username'], new_password)
+
+            member = MemberValues(form.cleaned_data['username'], new_password)
+            member.set('sambaLMPassword', smbpasswd.lmhash(new_password))
+            member.set('sambaNTPassword', smbpasswd.nthash(new_password))
+            member.save()
+
             new_form = AdminForm(request=request, users=users)
             return render(request, 'admin.html',
                 {'message': _('The password for %s was changed. Thank you!' % form.cleaned_data['username']),
