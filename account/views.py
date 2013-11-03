@@ -260,3 +260,6 @@ def admin(request):
     #username = cleaned_data.get('username')
     #admin_username = self._request.user.username
     #admin_password = self._request.session['ldap_password']
+
+def hammertime(request):
+    return render(request, 'hammertime.html', {})
