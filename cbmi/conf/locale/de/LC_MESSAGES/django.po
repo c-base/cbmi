@@ -1,0 +1,39 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-10-25 20:39+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: templates/base.html:53
+msgid "member interface"
+msgstr ""
+
+#: templates/base.html:89
+msgid ""
+"On this website any member can view and\n"
+"                    edit their data stored in the LDAP directory of\n"
+"                    c-base."
+msgstr ""
+
+#: templates/base.html:94
+msgid ""
+"If you are a new member and don't have a\n"
+"                    password yet, please contact one of the following people:"
+msgstr ""
+
+#: templates/base.html:112
+msgid "Sign in"
+msgstr ""
