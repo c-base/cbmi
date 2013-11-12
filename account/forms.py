@@ -33,7 +33,7 @@ class GastroPinField(forms.CharField):
     widget = forms.PasswordInput
     def validate(self, value):
         """
-        Check if the value is all numeric and 4 - 6 chars long.
+        Check if the value is all numeric and 4 - 8 chars long.
         """
         match = re.match(r'^\d{4,8}$', value)
         if not match:
@@ -42,13 +42,14 @@ class GastroPinField(forms.CharField):
 
 class GastroPinForm(forms.Form):
     gastropin1 = GastroPinField(label=_('New Gastro-PIN'))
-    gastropin2 = GastroPinField(label=_('Repeat Gastro-PIN'))
+    gastropin2 = GastroPinField(label=_('Repeat Gastro-PIN'),
+        help_text=_('Numerical only, 4 to 8 digits'))
 
     def clean(self):
         cleaned_data = super(GastroPinForm, self).clean()
         gastropin1 = cleaned_data.get("gastropin1")
-        gastropin2 = cleaned_data.get("gastropin2",
-            help_text=_('Numerical only, 4 to 8 digits'))
+        gastropin2 = cleaned_data.get("gastropin2")
+
         if gastropin1 != gastropin2:
             raise forms.ValidationError(
                 _('The PINs entered were not identical.'),
