@@ -173,13 +173,11 @@ class MemberValues(object):
                 if (result_data == []):
                     break
                 else:
-                    ## here you don't have to append to a list
-                    ## you could do whatever you want with the individual entry
-                    ## The appending to list is just for illustration.
                     if result_type == ldap.RES_SEARCH_ENTRY:
                         result_set.append(result_data)
 
-            userlist = [x[0][1]['uid'][0] for x in result_set]
+            # list comprehension to get a list of user tupels in the format ("nickname", "nickname (real name)")
+            userlist = [(x[0][1]['uid'][0], '%s (%s)' % (x[0][1]['uid'][0], x[0][1]['cn'][0])) for x in result_set]
             return sorted(userlist)
         except:
             return []
