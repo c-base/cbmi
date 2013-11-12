@@ -137,7 +137,7 @@ class AdminForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self._request = kwargs.pop('request', None)
         self._users = kwargs.pop('users', [])
-        choices = [(x, x) for x in self._users]
+        choices = [x for x in self._users]
         choices.insert(0, ('', 'Select username ...'))
         super(AdminForm, self).__init__(*args, **kwargs)
         self.fields.insert(0, 'username', forms.ChoiceField(choices=choices,
