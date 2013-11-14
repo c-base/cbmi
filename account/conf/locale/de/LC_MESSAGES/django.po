@@ -19,7 +19,7 @@ msgstr ""
 
 #: forms.py:20
 msgid "Sorry, that login was invalid. Please try again."
-msgstr "Entschuldige, diese Logindaten waren falsch. Bitte versuche es nochmal."
+msgstr ""
 
 #: forms.py:39
 msgid "PIN must be 4 to 6 digits."
@@ -35,11 +35,11 @@ msgstr "Gastro-PIN wiederholen"
 
 #: forms.py:52 forms.py:86
 msgid "The PINs entered were not identical."
-msgstr "Die beiden eingegeben PINs waren nicht gleich."
+msgstr "Die beiden eingegeben PINs waren nicht identisch."
 
 #: forms.py:60
 msgid "Enable WiFi presence"
-msgstr "WLAN-Präsenzerkennung einschalten"
+msgstr "WLAN-Presence einschalten"
 
 #: forms.py:65
 msgid "New password"
@@ -114,13 +114,10 @@ msgid ""
 "enter\n"
 "        your numeric user ID"
 msgstr ""
-"Ändere deine Gastro-PIN um die Getränkeautomaten zu benutzen.\n
-"        Um die Memberpreise freizuschalten, drücke die <code>A</code>-Taste\n"
-"        und gib dann deine numerische User-ID ein."
 
 #: templates/gastropin.html:13
 msgid "and your Gastro PIN."
-msgstr "und deine Gastro-PIN"
+msgstr ""
 
 #: templates/login.html:20
 msgid "Login"
@@ -128,46 +125,45 @@ msgstr ""
 
 #: templates/member_base.html:9
 msgid "Home"
-msgstr "Heimat"
+msgstr ""
 
 #: templates/member_base.html:13 templates/password.html:5
 msgid "Password"
-msgstr "Passwort"
+msgstr ""
 
 #: templates/member_base.html:17
 msgid "Gastro-PIN"
-msgstr "Gastro-PIN"
+msgstr ""
 
 #: templates/member_base.html:21
 msgid "WiFi presence"
-msgstr "WLAN-Präsenzerkennung"
+msgstr "WLAN-Presence"
 
 #: templates/member_base.html:25 templates/rfid.html:5
 msgid "RFID"
 msgstr ""
 
 #: templates/member_base.html:29
-msgid "c-lab PIN"
-msgstr "c-lab-PIN"
+msgid "c-lab-PIN"
+msgstr ""
 
 #: templates/member_base.html:33 templates/nrf24.html:5
 msgid "NRF24"
 msgstr ""
 
 #: templates/member_base.html:37
-msgid "SIP PIN"
-msgstr "SIP-PIN"
+msgid "SIP-PIN"
+msgstr ""
 
 #: templates/nrf24.html:8
 msgid ""
 "The NRF24 identification is used to interface with the\n"
 "    CCC's <a href=\"http://r0ket.badge.events.ccc.de/\">r0ket badge</a>."
 msgstr ""
-"Die NRF24-ID wird benutzt, um mit den <a href=\"http://r0ket.badge.events.ccc.de/\">r0ket-Badges</a> vom CCC zu reden."
 
 #: templates/password.html:8
 msgid "You can change your password here."
-msgstr "Hier kannst du dein Passwort ändern."
+msgstr ""
 
 #: templates/rfid.html:8
 msgid ""
@@ -177,63 +173,53 @@ msgid ""
 "    If you configured your RFID correctly, the airlock terminal will greet\n"
 "    you and show additional information. If you place your RFID tag in the\n"
 "    reader again when leaving, you will be logged out."
-msgstr "Du kannst ein Radio Frequency Identification (RFID)-Tag benutzen,\n"
-"    um anderen c-base-Mitgliedern wenn du ankommst deine Anwesenheit mitzuteilen.\n"
-"    Halte dazu dein RFID-Tag auf den RFID-Leser am Schleusenterminal.\n"
-"    Wenn du dein RFID richtig eingestellt hast, wird dich das Schleusenterminal\n"
-"    begrüßen und dir weitere Informationen anzeigen. Wenn du dein RFID-Tag nochmal\n"
-"    beim Verlassen der Raumstation auf den Leser hätst, wirst du Abgemeldet."
+msgstr ""
 
 #: templates/sippin.html:5
 msgid "SIP PIN"
-msgstr "SIP-PIN"
+msgstr ""
 
 #: templates/sippin.html:8
 msgid ""
 "The SIP PIN is your access to the c-base SIP server for voice telephony."
 msgstr ""
-"Die SIP-PIN ist dein Zugangskode zum SIP-Server (Internettelefonie) der c-base.
 
 #: templates/start.html:7
 msgid "Welcome to the c-base member interface"
-msgstr "Willkommen zur c-base-Mitgliederschnittstelle"
+msgstr ""
 
 #: templates/start.html:8
 msgid ""
 "Here you can change\n"
 "            some parameters of your c-base member account."
 msgstr ""
-"Hier kannst du\n"
-"            einige Einstellungen deines c-base-Mitgliedszugangs ändern."
 
 #: templates/start.html:11
 msgid "Basic information about your account"
-msgstr "Grundlegende Informationen über deinen Zugang"
+msgstr ""
 
 #: templates/start.html:15
 msgid "Your user ID:"
-msgstr "Deine Nutzer-ID"
+msgstr ""
 
 #: templates/start.html:17
 msgid "Numeric user ID:"
-msgstr "Numerische Nutzer-ID:"
+msgstr ""
 
 #: templates/start.html:19
 msgid ""
 "The numeric user ID can be used to login with\n"
 "                    the vending machines and network connected combination\n"
 "                    locks."
-msgstr "Die numerische Nutzer-ID kann zur Anmeldung\n"
-"                    an den Getränkeautomaten und Netzwerkverbundenen\n"
-"                    Kodeschlössern benutzt werden."
+msgstr ""
 
 #: templates/start.html:23
 msgid "Your c-base e-mail address:"
-msgstr "Deine c-base-e-Mail-Adresse"
+msgstr ""
 
 #: templates/start.html:28
 msgid "Management information"
-msgstr "Verwaltungsinformationen"
+msgstr ""
 
 #: templates/start.html:31
 msgid "Name:"
@@ -241,7 +227,7 @@ msgstr ""
 
 #: templates/start.html:35
 msgid "External e-mail address:"
-msgstr "Externe e-Mail-Adresse"
+msgstr ""
 
 #: templates/start.html:37
 msgid ""
@@ -251,23 +237,19 @@ msgid ""
 "                    externe e-mail address please contact the c-base board\n"
 "                    (<a href=\"mailto:vorstand@c-base.org\">vorstand@c-base."
 "org</a>)."
-msgstr "Die externe e-Mail-Adresse wird\n"
-"                    vom Vorstand der c-base benutzt, um dich zu erreichen falls\n"
-"                    deine c-base-Adresse (siehe oben) nicht funktioniert. Um deine\n"
-"                    externe e-Mail-Adresse zu ändern, tritt bitte mit dem Vorstand\n"
-"                    in Kontakt (<a href=\"mailto:vorstand@c-base.org\">vorstand@c-base.org</a>)."
+msgstr ""
 
 #: templates/start.html:44
 msgid "Your c-base member account balance:"
-msgstr "Dein c-base-Mitgliedskontostand"
+msgstr ""
 
 #: templates/start.html:45
 msgid "Check balance"
-msgstr "Kontostand überprüfen"
+msgstr ""
 
 #: templates/wlan_presence.html:5
 msgid "WiFi Presence"
-msgstr "WLAN-Präsenzerkennung"
+msgstr ""
 
 #: templates/wlan_presence.html:8
 msgid ""
@@ -276,6 +258,3 @@ msgid ""
 "Wifi\n"
 "    (SSID: c-base-crew) with your username and password."
 msgstr ""
-"Die WLAN-Präsenzerkennung medlet dich automatisch\n"
-"    bei der c-base an, sobald du ein Gerät mit dem Crew-WLAN\n"
-"    (SSID: c-base-crew) mit deinem Usernamen und Passwort verbindest."
