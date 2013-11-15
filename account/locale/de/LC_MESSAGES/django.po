@@ -1,0 +1,389 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-15 22:57+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: forms.py:14
+msgid "Cookies must be enabled."
+msgstr ""
+
+#: forms.py:21
+msgid "Sorry, that login was invalid. Please try again."
+msgstr ""
+"Entschuldige, diese Logindaten waren falsch. Bitte versuche es nochmal."
+
+#: forms.py:40
+#, fuzzy
+msgid "PIN must be 4 to 8 digits."
+msgstr "Die PIN muss 4 - 6 Ziffern enthalten."
+
+#: forms.py:44
+msgid "New Gastro-PIN"
+msgstr "Neue Gastro-PIN"
+
+#: forms.py:45
+msgid "Repeat Gastro-PIN"
+msgstr "Gastro-PIN wiederholen"
+
+#: forms.py:46 forms.py:127
+#, fuzzy
+msgid "Numerical only, 4 to 8 digits"
+msgstr "Nur Zahlen, 4 bis 6 Ziffern lang"
+
+#: forms.py:55 forms.py:114
+msgid "The PINs entered were not identical."
+msgstr "Die beiden eingegeben PINs waren nicht gleich."
+
+#: forms.py:63
+msgid "Enable WiFi presence"
+msgstr "WLAN-Präsenzerkennung einschalten"
+
+#: forms.py:68
+#, fuzzy
+msgid "Old password"
+msgstr "Neues Passwort"
+
+#: forms.py:69
+#, fuzzy
+msgid "Enter your current password here."
+msgstr "Hier kannst du dein Passwort ändern."
+
+#: forms.py:71 forms.py:132
+msgid "New password"
+msgstr "Neues Passwort"
+
+#: forms.py:73 forms.py:134
+msgid "Repeat password"
+msgstr "Passwort wiederholen"
+
+#: forms.py:86
+msgid "The old password was incorrect."
+msgstr ""
+
+#: forms.py:93 forms.py:153
+#, fuzzy
+msgid "The new passwords were not identical."
+msgstr "Die beiden eingegeben PINs waren nicht gleich."
+
+#: forms.py:99
+msgid "Your RFID"
+msgstr "Deine RFID"
+
+#: forms.py:100
+msgid ""
+"Find out your RFID by holding your RFID tag to the reader in the airlock."
+msgstr ""
+"Du kannst deine RFID herausfinden, in dem du eine nicht registrierte RFID-"
+"Karte an die Schleuse hältst."
+
+#: forms.py:105
+msgid "Your SIP PIN"
+msgstr "Deine SIP-PIN"
+
+#: forms.py:106
+msgid "Repeat SIP PIN"
+msgstr "SIP-PIN wiederholen"
+
+#: forms.py:120
+msgid "NRF24-ID"
+msgstr "NRF24-ID"
+
+#: forms.py:121
+msgid "Your r0ket's NRF24 identification"
+msgstr "Die NRF24-ID deiner r0ket"
+
+#: forms.py:125
+msgid "New c-lab PIN"
+msgstr "Neue c-lab-PIN"
+
+#: forms.py:126
+msgid "Repeat c-lab PIN"
+msgstr "c-lab-PIN wiederholen"
+
+#: forms.py:144
+msgid "Select the username for whom you want to reset the password."
+msgstr ""
+
+#: views.py:122 views.py:211
+msgid "Your changes have been saved. Thank you!"
+msgstr "Deine Änderungen wurden gespeichert. Vielen Dank!"
+
+#: views.py:180
+#, fuzzy
+msgid "Your password was changed. Thank you!"
+msgstr "Deine Änderungen wurden gespeichert. Vielen Dank!"
+
+#: views.py:256
+#, python-format
+msgid "The password for %s was changed. Thank you!"
+msgstr ""
+
+#: templates/access_denied.html:5 templates/member_base.html:13
+#: templates/password.html:5
+msgid "Password"
+msgstr "Passwort"
+
+#: templates/access_denied.html:8
+msgid "ACCESS DENIED"
+msgstr ""
+
+#: templates/admin.html:5
+#, fuzzy
+msgid "Admin Password"
+msgstr "Passwort"
+
+#: templates/admin.html:8
+#, fuzzy
+msgid "You can change other users passwords here."
+msgstr "Hier kannst du dein Passwort ändern."
+
+#: templates/admin.html:18 templates/clabpin.html:18
+#: templates/gastropin.html:23 templates/nrf24.html:19
+#: templates/password.html:18 templates/sippin.html:18
+msgid "Save"
+msgstr "Speichern"
+
+#: templates/base.html:70
+msgid "member interface"
+msgstr ""
+
+#: templates/base.html:106
+msgid ""
+"On this website any member can view and\n"
+"                    edit their data stored in the LDAP directory of\n"
+"                    c-base."
+msgstr ""
+
+#: templates/base.html:111
+msgid ""
+"If you are a new member and don't have a\n"
+"                    password yet, please contact one of the following people:"
+msgstr ""
+
+#: templates/base.html:129
+msgid "Sign in"
+msgstr ""
+
+#: templates/clabpin.html:5
+msgid "c-lab PIN"
+msgstr "c-lab-PIN"
+
+#: templates/clabpin.html:8
+msgid "Change your c-lab PIN to access the c-lab in the basement."
+msgstr "PIN ändern für den Zugang um c-lab im Keller."
+
+#: templates/gastropin.html:5
+msgid "Gastro PIN"
+msgstr "Gastro-PIN"
+
+#: templates/gastropin.html:9
+msgid ""
+"Change your Gastro PIN to access the vending machines.\n"
+"        To use unlock member prices, press the <code>A</code> button then "
+"enter\n"
+"        your numeric user ID"
+msgstr ""
+"Ändere deine Gastro-PIN um die Getränkeautomaten zu benutzen.\n"
+"        Um die Memberpreise freizuschalten, drücke die <code>A</code>-Taste\n"
+"        und gib dann deine numerische User-ID ein."
+
+#: templates/gastropin.html:13
+msgid "and your Gastro PIN."
+msgstr "und deine Gastro-PIN"
+
+#: templates/home.html:7
+msgid "Welcome to the c-base member interface"
+msgstr "Willkommen im c-base member interface"
+
+#: templates/home.html:10
+#, fuzzy
+msgid ""
+"Here you can change some parameters of your\n"
+"                c-base member account."
+msgstr ""
+"Hier kannst du\n"
+"            einige Einstellungen deines c-base-Mitgliedszugangs ändern."
+
+#: templates/home.html:13
+msgid "Basic information about your account"
+msgstr "Grundlegende Informationen über deinen Zugang"
+
+#: templates/home.html:17
+msgid "Your user ID:"
+msgstr "Deine Nutzer-ID"
+
+#: templates/home.html:19
+msgid "Numeric user ID:"
+msgstr "Numerische Nutzer-ID:"
+
+#: templates/home.html:21
+#, fuzzy
+msgid ""
+"The numeric user ID can\n"
+"                        be used to login with the vending machines and "
+"network\n"
+"                        connected combination locks."
+msgstr ""
+"Die numerische Nutzer-ID kann zur Anmeldung\n"
+"                    an den Getränkeautomaten und Netzwerkverbundenen\n"
+"                    Kodeschlössern benutzt werden."
+
+#: templates/home.html:25
+msgid "Your c-base e-mail address:"
+msgstr "Deine c-base-e-Mail-Adresse"
+
+#: templates/home.html:30
+msgid "Your group memberships"
+msgstr ""
+
+#: templates/home.html:31
+msgid "You are part of the following LDAP groups:"
+msgstr ""
+
+#: templates/home.html:38
+msgid "Management information"
+msgstr "Verwaltungsinformationen"
+
+#: templates/home.html:41
+msgid "Name:"
+msgstr ""
+
+#: templates/home.html:45
+msgid "External e-mail address:"
+msgstr "Externe e-Mail-Adresse"
+
+#: templates/home.html:47
+#, fuzzy
+msgid ""
+"The external e-mail address is used by the\n"
+"                    board of c-base to reach you in cases where your c-base\n"
+"                    address (see above) is not working. To change your\n"
+"                    external e-mail address please contact the c-base board\n"
+"                    (<a href=\"mailto:vorstand@c-base.org\">vorstand@c-base."
+"org</a>)."
+msgstr ""
+"Die externe e-Mail-Adresse wird\n"
+"                    vom Vorstand der c-base benutzt, um dich zu erreichen "
+"falls\n"
+"                    deine c-base-Adresse (siehe oben) nicht funktioniert. Um "
+"deine\n"
+"                    externe e-Mail-Adresse zu ändern, tritt bitte mit dem "
+"Vorstand\n"
+"                    in Kontakt (<a href=\"mailto:vorstand@c-base.org"
+"\">vorstand@c-base.org</a>)."
+
+#: templates/home.html:54
+msgid "Your c-base member account balance:"
+msgstr "Dein c-base-Mitgliedskontostand"
+
+#: templates/home.html:55
+msgid "Check balance"
+msgstr "Kontostand überprüfen"
+
+#: templates/login.html:20
+msgid "Login"
+msgstr ""
+
+#: templates/member_base.html:9
+msgid "Home"
+msgstr "Heimat"
+
+#: templates/member_base.html:17
+msgid "Gastro-PIN"
+msgstr "Gastro-PIN"
+
+#: templates/member_base.html:21
+msgid "WiFi presence"
+msgstr "WLAN-Präsenzerkennung"
+
+#: templates/member_base.html:25 templates/rfid.html:5
+msgid "RFID"
+msgstr ""
+
+#: templates/member_base.html:29
+#, fuzzy
+msgid "c-lab-PIN"
+msgstr "c-lab-PIN"
+
+#: templates/member_base.html:33 templates/nrf24.html:5
+msgid "NRF24"
+msgstr ""
+
+#: templates/member_base.html:37
+msgid "SIP-PIN"
+msgstr ""
+
+#: templates/member_base.html:44
+msgid "Admin"
+msgstr ""
+
+#: templates/nrf24.html:8
+msgid ""
+"The NRF24 identification is used to interface with the\n"
+"    CCC's <a href=\"http://r0ket.badge.events.ccc.de/\">r0ket badge</a>."
+msgstr ""
+"Die NRF24-ID wird benutzt, um mit den <a href=\"http://r0ket.badge.events."
+"ccc.de/\">r0ket-Badges</a> vom CCC zu reden."
+
+#: templates/password.html:8
+msgid "You can change your password here."
+msgstr "Hier kannst du dein Passwort ändern."
+
+#: templates/rfid.html:8
+msgid ""
+"A Radio Frequency Identification (RFID) tag can be used\n"
+"    to announce your presence to other c-base members when you arrive.\n"
+"    Place your RFID tag on the RFID reader in the airlock terminal.\n"
+"    If you configured your RFID correctly, the airlock terminal will greet\n"
+"    you and show additional information. If you place your RFID tag in the\n"
+"    reader again when leaving, you will be logged out."
+msgstr ""
+"Du kannst ein Radio Frequency Identification (RFID)-Tag benutzen,\n"
+"    um anderen c-base-Mitgliedern wenn du ankommst deine Anwesenheit "
+"mitzuteilen.\n"
+"    Halte dazu dein RFID-Tag auf den RFID-Leser am Schleusenterminal.\n"
+"    Wenn du dein RFID richtig eingestellt hast, wird dich das "
+"Schleusenterminal\n"
+"    begrüßen und dir weitere Informationen anzeigen. Wenn du dein RFID-Tag "
+"nochmal\n"
+"    beim Verlassen der Raumstation auf den Leser hätst, wirst du Abgemeldet."
+
+#: templates/sippin.html:5
+msgid "SIP PIN"
+msgstr "SIP-PIN"
+
+#: templates/sippin.html:8
+msgid ""
+"The SIP PIN is your access to the c-base SIP server for voice telephony."
+msgstr ""
+"Die SIP-PIN ist dein Zugangskode zum SIP-Server (Internettelefonie) der c-"
+"base."
+
+#: templates/wlan_presence.html:5
+msgid "WiFi Presence"
+msgstr "WLAN-Präsenzerkennung"
+
+#: templates/wlan_presence.html:8
+msgid ""
+"The WiFi Presence automatically logs you in\n"
+"    to the c-base presence system when you connect a device to the Crew-"
+"Wifi\n"
+"    (SSID: c-base-crew) with your username and password."
+msgstr ""
+"Die WLAN-Präsenzerkennung medlet dich automatisch\n"
+"    bei der c-base an, sobald du ein Gerät mit dem Crew-WLAN\n"
+"    (SSID: c-base-crew) mit deinem Usernamen und Passwort verbindest."
