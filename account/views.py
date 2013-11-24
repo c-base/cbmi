@@ -141,7 +141,7 @@ def gastropin(request):
 
 @login_required
 def clabpin(request):
-    if not request.user.is_clab_member:
+    if not request.user.profile.is_clab_member:
         return render(request, 'access_denied.html')
 
     def calculate_clab_hash(pin):

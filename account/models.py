@@ -34,6 +34,10 @@ class UserProfile(models.Model):
                                null=True,
                                blank=True,
                                default=None)
+    is_member = models.BooleanField(default=False, editable=False)
+    is_ldap_admin = models.BooleanField(default=False, editable=False)
+    is_circle_member = models.BooleanField(default=False, editable=False)
+    is_clab_member = models.BooleanField(default=False, editable=False)
 
     def __unicode__(self):
         return 'Profile: %s' % self.user.username
