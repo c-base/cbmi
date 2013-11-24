@@ -236,7 +236,7 @@ def nrf24(request):
 @login_required
 def admin(request):
     admin_member = retrieve_member(request)
-    if request.user.groups.filter(name='ldap_admins').count() == 0:
+    if not request.user.profile.is_ldap_admin:
         return render(request, 'access_denied.html')
     users = admin_member.list_users()
     if request.method == 'POST':
