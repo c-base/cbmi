@@ -141,6 +141,7 @@ AUTH_LDAP_GROUP_TYPE = GroupOfNamesType(name_attr="cn")
 AUTH_LDAP_USER_FLAGS_BY_GROUP = {
     "is_member": "cn=crew,ou=groups,dc=c-base,dc=org",
     "is_circle_member": "cn=circle,ou=groups,dc=c-base,dc=org",
+    "is_clab_member": "cn=cey-c-lab,ou=groups,dc=c-base,dc=org",
 }
 
 AUTH_LDAP_USER_ATTR_MAP = {
