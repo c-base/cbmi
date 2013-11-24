@@ -40,11 +40,12 @@ def landingpage(request):
         try:
             user = User.objects.get(username=check_nickname)
             check_nickname = True
-            # output as text if requested
-            if request.GET.get('raw', ''):
-                return HttpResponse(check_nickname)
         except:
             check_nickname = False
+
+    # output as text if requested
+    if request.GET.get('raw', ''):
+        return HttpResponse(check_nickname)
 
     return render(request, 'base.html', locals())
 
