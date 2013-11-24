@@ -71,20 +71,18 @@
             </span>
             <div class="nav-collapse collapse">
                 <ul class="nav nav-collapse collapse pull-right">
-                        {% if request.user.is_authenticated %}
-                            <li><a href="/account/logout/">Logout</a></li>
-                        {% else %}
-                            <li><a href="/account/login/">Login</a></li>
-                        {% endif %}
-                    </ul>
+                    {% if request.user.is_authenticated %}
+                        <li><a href="/account/logout/">Logout</a></li>
+                    {% else %}
+                        <li><a href="/account/login/">Login</a></li>
+                    {% endif %}
+                </ul>
                 {% if request.user.is_authenticated %}
-                    <p class="navbar-text pull-right">
-                        <i class="icon icon-user icon-white"></i>
-                        {{ user.username }}
-                    </p>
+                <p class="navbar-text pull-right">
+                    <i class="icon icon-user icon-white"></i>
+                    {{ user.username }}
+                </p>
                 {% endif %}
-
-                </div>
             </div>
             <!--/.nav-collapse -->
         </div>

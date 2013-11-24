@@ -26,11 +26,6 @@ def landingpage(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/account')
     form = LoginForm()
-    is_ceymaster = is_admin = False
-    if 'ceymaster' in [g.name for g in request.user.groups.all()]:
-        is_ceymaster = True
-    if 'ldap_admins' in [g.name for g in request.user.groups.all()]:
-        is_admin = True
     groups = Group.objects.all()
     try:
         admins = Group.objects.get(name="ldap_admins").user_set.all()
