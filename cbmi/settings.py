@@ -132,15 +132,17 @@ AUTH_LDAP_CACHE_GROUPS = True
 AUTH_LDAP_GROUP_CACHE_TIMEOUT = 300
 AUTH_LDAP_MIRROR_GROUPS = True
 AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
-    "dc=c-base,dc=org",
+    "ou=groups,dc=c-base,dc=org",
     ldap.SCOPE_SUBTREE,
     "(objectClass=groupOfNames)",
 )
 AUTH_LDAP_REQUIRE_GROUP = "cn=crew,ou=groups,dc=c-base,dc=org"
 AUTH_LDAP_GROUP_TYPE = GroupOfNamesType(name_attr="cn")
-AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
     "is_member": "cn=crew,ou=groups,dc=c-base,dc=org",
+    "is_ldap_admin": "cn=ldap_admins,ou=groups,dc=c-base,dc=org",
     "is_circle_member": "cn=circle,ou=groups,dc=c-base,dc=org",
+    "is_clab_member": "cn=cey-c-lab,ou=groups,dc=c-base,dc=org",
 }
 
 AUTH_LDAP_USER_ATTR_MAP = {
