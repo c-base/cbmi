@@ -6,7 +6,7 @@ import hashlib
 import smbpasswd
 
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.contrib.auth import login, logout, authenticate
@@ -25,14 +25,28 @@ from password_encryption import *
 def landingpage(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/account')
-    form = LoginForm()
-    groups = Group.objects.all()
+    login_form = LoginForm()
     try:
+        # just in case the group hasn't yet been synced
         admins = Group.objects.get(name="ldap_admins").user_set.all()
     except:
+        # else provide an emtpy list
         admins = []
 
-    return render(request, 'base.html', {'form': form, 'admins': admins})
+    # https://github.com/c-base/cbmi/issues/20
+    # check if nick is still available feature
+    check_nickname = request.GET.get('check_nickname', '')
+    if check_nickname:
+        try:
+            user = User.objects.get(username=check_nickname)
+            check_nickname = True
+            # output as text if requested
+            if request.GET.get('raw', ''):
+                return HttpResponse(check_nickname)
+        except:
+            check_nickname = False
+
+    return render(request, 'base.html', locals())
 
 def auth_login(request):
     redirect_to = request.GET.get('next', '') or '/'
