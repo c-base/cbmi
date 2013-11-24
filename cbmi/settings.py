@@ -143,6 +143,7 @@ AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
     "is_ldap_admin": "cn=ldap_admins,ou=groups,dc=c-base,dc=org",
     "is_circle_member": "cn=circle,ou=groups,dc=c-base,dc=org",
     "is_clab_member": "cn=cey-c-lab,ou=groups,dc=c-base,dc=org",
+    "is_ceymaster": "cn=ceymaster,ou=groups,dc=c-base,dc=org",
 }
 
 AUTH_LDAP_USER_ATTR_MAP = {
