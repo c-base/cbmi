@@ -71,20 +71,18 @@
             </span>
             <div class="nav-collapse collapse">
                 <ul class="nav nav-collapse collapse pull-right">
-                        {% if request.user.is_authenticated %}
-                            <li><a href="/account/logout/">Logout</a></li>
-                        {% else %}
-                            <li><a href="/account/login/">Login</a></li>
-                        {% endif %}
-                    </ul>
+                    {% if request.user.is_authenticated %}
+                        <li><a href="/account/logout/">Logout</a></li>
+                    {% else %}
+                        <li><a href="/account/login/">Login</a></li>
+                    {% endif %}
+                </ul>
                 {% if request.user.is_authenticated %}
-                    <p class="navbar-text pull-right">
-                        <i class="icon icon-user icon-white"></i>
-                        {{ user.username }}
-                    </p>
+                <p class="navbar-text pull-right">
+                    <i class="icon icon-user icon-white"></i>
+                    {{ user.username }}
+                </p>
                 {% endif %}
-
-                </div>
             </div>
             <!--/.nav-collapse -->
         </div>
@@ -120,16 +118,36 @@
             <div class="span4">
                 <div class="well">
                 <h4>Login</h4>
-                <form class="form" action="/account/login/?next={% url account.views.home %}"
-                      method="post">
-                    {% csrf_token %}
-                    {{ form|crispy }}
-                    <div class="control-group">
-                        <div class="controls">
-                            <button type="submit" class="btn btn-primary">{% trans "Sign in" %}</button>
+                    <form class="form" action="/account/login/?next={% url account.views.home %}"
+                          method="post">
+                        {% csrf_token %}
+                        {{ login_form|crispy }}
+                        <div class="control-group">
+                            <div class="controls">
+                                <button type="submit" class="btn btn-primary">{% trans "Sign in" %}</button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                    <hr />
+                    <form class="form" action="/" method="get">
+                        <input type="text" id="check_nickname" name="check_nickname">
+                        <div class="control-group">
+                            <div class="controls">
+                                <button type="submit" class="btn">{% trans "Check nick" %}</button>
+                            </div>
+                        </div>
+                    </form>
+                    {% if not check_nickname == "" %}
+                        {% if check_nickname %}
+                            <div class="alert alert-danger alert-block">
+                                {% blocktrans %}This nick is already taken.{% endblocktrans %}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-success alert-block">
+                                {% blocktrans %}This nick is still available.{% endblocktrans %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
                 </div><!-- /.well -->
             </div>
         </div>
