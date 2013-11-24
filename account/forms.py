@@ -92,6 +92,11 @@ class PasswordForm(forms.Form):
             raise forms.ValidationError(
                 _('The new passwords were not identical.'),
                 code='not_identical')
+        if len(password1) < 6:
+            raise forms.ValidationError(
+                _('Password must be at least 6 characters long'),
+                code='to_short')
+
         return cleaned_data
 
 
@@ -152,6 +157,10 @@ class AdminForm(forms.Form):
             raise forms.ValidationError(
                 _('The new passwords were not identical.'),
                 code='not_identical')
+        if len(password1) < 6:
+            raise forms.ValidationError(
+                _('Password must be at least 6 characters long'),
+                code='to_short')
 
         return cleaned_data
 
