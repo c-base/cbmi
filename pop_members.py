@@ -8,7 +8,7 @@ Django database with all discovered members, and groups.
 https://github.com/c-base/cbmi/issues/22
 
 Usage:
-    # ./manage shell
+    # python manage.py shell
     from pop_members import *
     populate_members()
 """
