@@ -6,6 +6,11 @@ This script fetches all active members from the LDAP database and populates the
 Django database with all discovered members, and groups.
 
 https://github.com/c-base/cbmi/issues/22
+
+Usage:
+    # ./manage shell
+    from pop_members import *
+    populate_members()
 """
 
 import ldap
