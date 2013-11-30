@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-15 22:57+0100\n"
+"POT-Creation-Date: 2013-11-30 23:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,12 +19,11 @@ msgstr ""
 
 #: forms.py:14
 msgid "Cookies must be enabled."
-msgstr ""
+msgstr "Cookies muessen aktiviert sein."
 
 #: forms.py:21
 msgid "Sorry, that login was invalid. Please try again."
-msgstr ""
-"Entschuldige, diese Logindaten waren falsch. Bitte versuche es nochmal."
+msgstr "Login fehlgeschlagen. Bitte versuche es nochmal."
 
 #: forms.py:40
 #, fuzzy
@@ -39,12 +38,12 @@ msgstr "Neue Gastro-PIN"
 msgid "Repeat Gastro-PIN"
 msgstr "Gastro-PIN wiederholen"
 
-#: forms.py:46 forms.py:127
+#: forms.py:46 forms.py:132
 #, fuzzy
 msgid "Numerical only, 4 to 8 digits"
 msgstr "Nur Zahlen, 4 bis 6 Ziffern lang"
 
-#: forms.py:55 forms.py:114
+#: forms.py:55 forms.py:119
 msgid "The PINs entered were not identical."
 msgstr "Die beiden eingegeben PINs waren nicht gleich."
 
@@ -62,75 +61,79 @@ msgstr "Neues Passwort"
 msgid "Enter your current password here."
 msgstr "Hier kannst du dein Passwort ändern."
 
-#: forms.py:71 forms.py:132
+#: forms.py:71 forms.py:137
 msgid "New password"
 msgstr "Neues Passwort"
 
-#: forms.py:73 forms.py:134
+#: forms.py:73 forms.py:139
 msgid "Repeat password"
 msgstr "Passwort wiederholen"
 
 #: forms.py:86
 msgid "The old password was incorrect."
-msgstr ""
+msgstr "Das alte Passwort war inkorrekt."
 
-#: forms.py:93 forms.py:153
+#: forms.py:93 forms.py:158
 #, fuzzy
 msgid "The new passwords were not identical."
-msgstr "Die beiden eingegeben PINs waren nicht gleich."
+msgstr "Die beiden eingegeben Passwoerter waren nicht identisch."
 
-#: forms.py:99
+#: forms.py:97 forms.py:162
+msgid "Password must be at least 6 characters long"
+msgstr "Das Passwort muss aus mindestens sechs Zeichen bestehen."
+
+#: forms.py:104
 msgid "Your RFID"
 msgstr "Deine RFID"
 
-#: forms.py:100
+#: forms.py:105
 msgid ""
 "Find out your RFID by holding your RFID tag to the reader in the airlock."
 msgstr ""
 "Du kannst deine RFID herausfinden, in dem du eine nicht registrierte RFID-"
 "Karte an die Schleuse hältst."
 
-#: forms.py:105
+#: forms.py:110
 msgid "Your SIP PIN"
 msgstr "Deine SIP-PIN"
 
-#: forms.py:106
+#: forms.py:111
 msgid "Repeat SIP PIN"
 msgstr "SIP-PIN wiederholen"
 
-#: forms.py:120
+#: forms.py:125
 msgid "NRF24-ID"
 msgstr "NRF24-ID"
 
-#: forms.py:121
+#: forms.py:126
 msgid "Your r0ket's NRF24 identification"
 msgstr "Die NRF24-ID deiner r0ket"
 
-#: forms.py:125
+#: forms.py:130
 msgid "New c-lab PIN"
 msgstr "Neue c-lab-PIN"
 
-#: forms.py:126
+#: forms.py:131
 msgid "Repeat c-lab PIN"
 msgstr "c-lab-PIN wiederholen"
 
-#: forms.py:144
+#: forms.py:149
 msgid "Select the username for whom you want to reset the password."
-msgstr ""
+msgstr "Zu editierendes Member auswaehlen."
 
-#: views.py:122 views.py:211
+#: views.py:132 views.py:221
 msgid "Your changes have been saved. Thank you!"
 msgstr "Deine Änderungen wurden gespeichert. Vielen Dank!"
 
-#: views.py:180
+#: views.py:190
 #, fuzzy
 msgid "Your password was changed. Thank you!"
 msgstr "Deine Änderungen wurden gespeichert. Vielen Dank!"
 
-#: views.py:256
+#: views.py:266
 #, python-format
 msgid "The password for %s was changed. Thank you!"
-msgstr ""
+msgstr "Das Passwort fuer %s wurde gespeichert. Danke!"
 
 #: templates/access_denied.html:5 templates/member_base.html:13
 #: templates/password.html:5
@@ -139,12 +142,12 @@ msgstr "Passwort"
 
 #: templates/access_denied.html:8
 msgid "ACCESS DENIED"
-msgstr ""
+msgstr "ZUGRIFF VERWEIGERT"
 
 #: templates/admin.html:5
 #, fuzzy
 msgid "Admin Password"
-msgstr "Passwort"
+msgstr "Admin Passwort"
 
 #: templates/admin.html:8
 #, fuzzy
@@ -161,22 +164,40 @@ msgstr "Speichern"
 msgid "member interface"
 msgstr ""
 
-#: templates/base.html:106
+#: templates/base.html:105
 msgid ""
 "On this website any member can view and\n"
 "                    edit their data stored in the LDAP directory of\n"
 "                    c-base."
 msgstr ""
+"Auf dieser Webseite kann jedes Member\n"
+"                    seine im c-base LDAP hinterlegten Daten abrufen\n"
+"                    und editieren."
 
-#: templates/base.html:111
+#: templates/base.html:110
 msgid ""
 "If you are a new member and don't have a\n"
 "                    password yet, please contact one of the following people:"
 msgstr ""
+"Wenn du ein Neu-Member bist und noch kein\n"
+"                    Passwort hast, musst du dich an einen der folgenden Member wenden:"
 
-#: templates/base.html:129
+#: templates/base.html:128
 msgid "Sign in"
-msgstr ""
+msgstr "Login"
+
+#: templates/base.html:137
+#, fuzzy
+msgid "Check nick"
+msgstr "Freien Nicknamen pruefen"
+
+#: templates/base.html:144
+msgid "This nick is already taken."
+msgstr "Dieser Nickname ist schon vergeben."
+
+#: templates/base.html:148
+msgid "This nick is still available."
+msgstr "Dieser Nickname ist noch zu haben."
 
 #: templates/clabpin.html:5
 msgid "c-lab PIN"
@@ -248,11 +269,11 @@ msgstr "Deine c-base-e-Mail-Adresse"
 
 #: templates/home.html:30
 msgid "Your group memberships"
-msgstr ""
+msgstr "Deine Gruppenzugehoerigkeiten"
 
 #: templates/home.html:31
 msgid "You are part of the following LDAP groups:"
-msgstr ""
+msgstr "Du bist Mitglied folgender LDAP Gruppen:"
 
 #: templates/home.html:38
 msgid "Management information"
@@ -260,7 +281,7 @@ msgstr "Verwaltungsinformationen"
 
 #: templates/home.html:41
 msgid "Name:"
-msgstr ""
+msgstr "Name:"
 
 #: templates/home.html:45
 msgid "External e-mail address:"
@@ -300,7 +321,7 @@ msgstr ""
 
 #: templates/member_base.html:9
 msgid "Home"
-msgstr "Heimat"
+msgstr ""
 
 #: templates/member_base.html:17
 msgid "Gastro-PIN"
