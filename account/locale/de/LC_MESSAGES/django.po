@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-30 23:23+0100\n"
+"POT-Creation-Date: 2013-12-01 00:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -152,7 +152,7 @@ msgstr "Admin Passwort"
 #: templates/admin.html:8
 #, fuzzy
 msgid "You can change other users passwords here."
-msgstr "Hier kannst du dein Passwort ändern."
+msgstr "Hier kannst du das Passwort anderer Member setzen."
 
 #: templates/admin.html:18 templates/clabpin.html:18
 #: templates/gastropin.html:23 templates/nrf24.html:19
@@ -180,7 +180,8 @@ msgid ""
 "                    password yet, please contact one of the following people:"
 msgstr ""
 "Wenn du ein Neu-Member bist und noch kein\n"
-"                    Passwort hast, musst du dich an einen der folgenden Member wenden:"
+"                    Passwort hast, musst du dich an einen der folgenden "
+"Member wenden:"
 
 #: templates/base.html:128
 msgid "Sign in"
@@ -230,14 +231,22 @@ msgstr "und deine Gastro-PIN"
 msgid "Welcome to the c-base member interface"
 msgstr "Willkommen im c-base member interface"
 
+#: templates/home.html:8
+#, python-format
+msgid ""
+"You are one of currently %(number_of_members)s\n"
+"            c-base members."
+msgstr ""
+"Du bist eines von zurzeit %(number_of_members)s\n"
+"            c-base Membern."
+
 #: templates/home.html:10
-#, fuzzy
 msgid ""
 "Here you can change some parameters of your\n"
 "                c-base member account."
 msgstr ""
-"Hier kannst du\n"
-"            einige Einstellungen deines c-base-Mitgliedszugangs ändern."
+"Hier kannst du einige deiner Parameter deines\n"
+"                c-base Accounts aendern."
 
 #: templates/home.html:13
 msgid "Basic information about your account"
@@ -288,24 +297,20 @@ msgid "External e-mail address:"
 msgstr "Externe e-Mail-Adresse"
 
 #: templates/home.html:47
-#, fuzzy
 msgid ""
 "The external e-mail address is used by the\n"
 "                    board of c-base to reach you in cases where your c-base\n"
 "                    address (see above) is not working. To change your\n"
-"                    external e-mail address please contact the c-base board\n"
-"                    (<a href=\"mailto:vorstand@c-base.org\">vorstand@c-base."
-"org</a>)."
+"                    external e-mail address please contact the c-base board "
+"via "
 msgstr ""
-"Die externe e-Mail-Adresse wird\n"
-"                    vom Vorstand der c-base benutzt, um dich zu erreichen "
-"falls\n"
-"                    deine c-base-Adresse (siehe oben) nicht funktioniert. Um "
-"deine\n"
-"                    externe e-Mail-Adresse zu ändern, tritt bitte mit dem "
-"Vorstand\n"
-"                    in Kontakt (<a href=\"mailto:vorstand@c-base.org"
-"\">vorstand@c-base.org</a>)."
+"Die externe E-Mail Adresse wird vom Vorstand\n"
+"                    verwendet, um dich in Situationen erreichen zu koennen,\n"
+"                    in denen deine interne c-mail Adresse nicht "
+"funktioniert.\n"
+"                    Um deine externe E-Mail zu aendern, kontaktiere bitte "
+"den\n"
+"                    Vorstand unter: "
 
 #: templates/home.html:54
 msgid "Your c-base member account balance:"
