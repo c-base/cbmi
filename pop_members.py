@@ -1,11 +1,16 @@
 #!/usr/bin/env python2.7
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 """Synchronize all members from LDAP and populate the database
 
 This script fetches all active members from the LDAP database and populates the
 Django database with all discovered members, and groups.
 
 https://github.com/c-base/cbmi/issues/22
+
+Usage:
+    # python manage.py shell
+    from pop_members import *
+    populate_members()
 """
 
 import ldap
