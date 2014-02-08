@@ -14,7 +14,7 @@ class LoginForm(forms.Form):
         help_text=_('Cookies must be enabled.'))
 
     def clean(self):
-        username = self.cleaned_data.get('username')
+        username = self.cleaned_data.get('username').lower()
         password = self.cleaned_data.get('password')
         user = authenticate(username=username, password=password)
         if not user or not user.is_active:
@@ -23,7 +23,7 @@ class LoginForm(forms.Form):
         return self.cleaned_data
 
     def login(self, request):
-        username = self.cleaned_data.get('username')
+        username = self.cleaned_data.get('username').lower()
         password = self.cleaned_data.get('password')
         user = authenticate(username=username, password=password)
         return user
@@ -79,7 +79,7 @@ class PasswordForm(forms.Form):
     def clean(self):
         cleaned_data = super(PasswordForm, self).clean()
         old_password = cleaned_data.get('old_password')
-        username = self._request.user.username
+        username = self._request.user.username.lower()
         user = authenticate(username=username, password=old_password)
 
         if not user or not user.is_active:
