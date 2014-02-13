@@ -206,7 +206,7 @@ msgstr "c-lab-PIN"
 
 #: templates/clabpin.html:8
 msgid "Change your c-lab PIN to access the c-lab in the basement."
-msgstr "PIN ändern für den Zugang um c-lab im Keller."
+msgstr "PIN ändern für den Zugang zum c-lab im Keller."
 
 #: templates/gastropin.html:5
 msgid "Gastro PIN"
