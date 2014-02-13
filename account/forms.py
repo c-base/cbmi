@@ -7,14 +7,28 @@ from django import forms
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext as _
 
+class UsernameField(forms.CharField):
+    """
+    The username field makes sure that usernames are always entered in lower-case.
+    If we do not convert the username to lower-case, Django will create more than
+    one user object in the database. If we then try to login again, the Django auth
+    subsystem will do an query that looks like this: username__iexact="username". The
+    result is an error, because iexact returns the objects for "username" and "Username".
+    """
+    
+    def to_python(self, value):
+        value = super(UsernameField, self).to_python(value)
+        value = value.lower()
+        return value
+    
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=255)
+    username = UsernameField(max_length=255)
     password = forms.CharField(max_length=255, widget=forms.PasswordInput,
         help_text=_('Cookies must be enabled.'))
-
+        
     def clean(self):
-        username = self.cleaned_data.get('username').lower()
+        username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
         user = authenticate(username=username, password=password)
         if not user or not user.is_active:
@@ -23,7 +37,7 @@ class LoginForm(forms.Form):
         return self.cleaned_data
 
     def login(self, request):
-        username = self.cleaned_data.get('username').lower()
+        username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
         user = authenticate(username=username, password=password)
         return user
