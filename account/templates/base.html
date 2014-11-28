@@ -134,18 +134,18 @@
                         <input type="text" id="check_nickname" name="check_nickname">
                         <div class="control-group">
                             <div class="controls">
-                                <button type="submit" class="btn">{% trans "Check nick" %}</button>
+                                <button type="submit" class="btn">{% trans "Check crewname" %}</button>
                             </div>
                         </div>
                     </form>
                     {% if not check_nickname == "" %}
                         {% if check_nickname %}
                             <div class="alert alert-danger alert-block">
-                                {% blocktrans %}This nick is already taken.{% endblocktrans %}
+                                {% blocktrans %}This crewname is already taken.{% endblocktrans %}
                             </div>
                         {% else %}
                             <div class="alert alert-success alert-block">
-                                {% blocktrans %}This nick is still available.{% endblocktrans %}
+                                {% blocktrans %}This crewname is still available.{% endblocktrans %}
                             </div>
                         {% endif %}
                     {% endif %}
