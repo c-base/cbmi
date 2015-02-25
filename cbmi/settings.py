@@ -4,7 +4,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Brian Wiborg', 'baccenfutter@c-base.org')
+    ('smile', 'smile@c-base.org')
     # ('Your Name', 'your_email@example.com'),
 )
 
@@ -68,7 +68,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/home/baccenfutter/PycharmProjects/cbmi/static',
+    '/home/cbmi/cbmi/static',
 )
 
 # List of finder classes that know how to find static files in
@@ -143,6 +143,7 @@ AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
     "is_ldap_admin": "cn=ldap_admins,ou=groups,dc=c-base,dc=org",
     "is_circle_member": "cn=circle,ou=groups,dc=c-base,dc=org",
     "is_clab_member": "cn=cey-c-lab,ou=groups,dc=c-base,dc=org",
+    "is_cey_member": "cn=cey-schleuse,ou=groups,dc=c-base,dc=org",
     "is_ceymaster": "cn=ceymaster,ou=groups,dc=c-base,dc=org",
 }
 
