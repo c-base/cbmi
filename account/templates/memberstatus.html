@@ -1,0 +1,114 @@
+{% extends "member_base.html" %}
+{% load i18n %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3>{% trans "Basic information about your account" %}</h3>
+
+            {{ contributions }}
+
+            <table class="table table-condensed table-bordered table-hover">
+                <tr><td>{% trans "Crewname:" %}</td><td>{{ cteward.Crewname }}</td></tr>
+                <tr><td>{% trans "Membership Number:" %}</td><td>{{ cteward.Mitgliedsnummer }}</td></tr>
+                <tr><td>{% trans "Status:" %}</td><td>{{ cteward.Status }}</td></tr>
+                <tr><td>{% trans "Firstname:" %}</td><td>{{ cteward.Vorname }}</td></tr>
+                <tr><td>{% trans "Lastname:" %}</td><td>{{ cteward.Nachname }}</td></tr>
+                <tr><td>{% trans "Street:" %}</td><td>{{ cteward.Strasse }}</td></tr>
+                <tr><td>{% trans "Postcode:" %}</td><td>{{ cteward.PLZ }}</td></tr>
+                <tr><td>{% trans "City:" %}</td><td>{{ cteward.Ort }}</td></tr>
+                <tr><td>{% trans "Gender:" %}</td><td>{{ cteward.Geschlecht }}</td></tr>
+                <tr><td>{% trans "Birth Date:" %}</td><td>{{ cteward.Geburtsdatum }}</td></tr>
+                <tr><td>{% trans "Entry Date:" %}</td><td>{{ cteward.Eintritt }}</td></tr>
+                <tr><td>{% trans "Godfather:" %}</td><td>{{ cteward.Paten }}</td></tr>
+                <tr><td>{% trans "Payment Method:" %}</td><td>{{ cteward.Zahlungsart }}</td></tr>
+                <tr><td>{% trans "Payment Frequency:" %}</td><td>{{ cteward.Zahlungsweise }}</td></tr>
+                <tr><td>{% trans "Debit Authorization:" %}</td><td>{{ cteward.Lastschriftmandat }}</td></tr>
+                <tr><td>{% trans "Bank:" %}</td><td>{{ cteward.Bank }}</td></tr>
+                <tr><td>{% trans "IBAN:" %}</td><td>{{ cteward.IBAN }}</td></tr>
+                <tr><td>{% trans "BIC:" %}</td><td>{{ cteward.BIC }}</td></tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <h3>{% trans "Contributions:" %}</h3>
+            </div>
+            <div class="panel-group" id="accordion">
+              <div class="panel panel-default">
+                  <a class="btn btn-lg btn-default btn-block" data-toggle="collapse" data-parent="#accordion" href="#total">{% trans "Total" %}</a>
+                  <div id="total" class="panel-collapse">
+                      <div class="terminal">
+                          <table class="table table-condensed table-bordered table-hover">
+                              <tr><td>{% trans "Billed:" %}</td><td>{{ contributions.total.billed }}</td></tr>
+                              <tr><td>{% trans "Paid:" %}</td><td>{{ contributions.total.paid }}</td></tr>
+                              <tr><td>{% trans "Unpaid:" %}</td><td>{{ contributions.total.unpaid }}</td></tr>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+              {% for year,values in contributions.years %}
+                  <div class="panel panel-default">
+                      <a class="btn btn-lg btn-default btn-block" data-toggle="collapse" data-parent="#accordion" href="#{{ year }}">{{ year }}</a>
+                      <div id="{{ year }}" class="panel-collapse collapse">
+                          <div class="terminal">
+                              <table class="table table-condensed table-bordered table-hover">
+                                  <tr><td>{% trans "Billed:" %}</td><td>{{ values.billed }}</td></tr>
+                                  <tr><td>{% trans "Paid:" %}</td><td>{{ values.paid }}</td></tr>
+                                  <tr><td>{% trans "Unpaid:" %}</td><td>{{ values.unpaid }}</td></tr>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              {% empty %}
+                  <a class="btn btn-block btn-lg btn-default btn-block"><b>{% trans "no data available" %}</b></a>
+              {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <h3>{% trans "Contracts:" %}</h3>
+            </div>
+            <div class="panel-group" id="contract-accordion">
+              {% for contract in contributions.contracts %}
+                  <div class="panel panel-default">
+                      <a class="btn btn-lg btn-default btn-block" data-toggle="collapse" data-parent="#contract-accordion" href="#{{ contract.Vertragsnummer }}">Contract #{{ contract.Vertragsnummer }}</a>
+                      <div id="{{ contract.Vertragsnummer }}" class="panel-collapse collapse">
+                          <div class="terminal">
+                              <table class="table table-condensed table-bordered table-hover">
+                                  <tr><td>{% trans "Type:" %}</td><td>{{ contract.Art }}</td></tr>
+                                  <tr><td>{% trans "Total:" %}</td><td>
+                                      <table>
+                                          <tr>
+                                              <td>{% trans "Billed:" %}</td><td>{{ contract.total.billed }}</td>
+                                              <td>{% trans "Paid:" %}</td><td>{{ contract.total.paid }}</td>
+                                              <td>{% trans "Unpaid:" %}</td><td>{{ contract.total.unpaid }}</td>
+                                          </tr>
+                                      </table>
+                                  </td></tr>
+                                  <tr><td>{% trans "Sums:" %}</td><td>
+                                      <table>
+                                          {% for detail, values in contract.Summen.items %}
+                                              <tr>
+                                                  <td>{{ detail }}:</td>
+                                                  <td>{% trans "Billed:" %}</td><td>{{ values.billed }}</td>
+                                                  <td>{% trans "Paid:" %}</td><td>{{ values.paid }}</td>
+                                                  <td>{% trans "Unpaid:" %}</td><td>{{ values.unpaid }}</td>
+                                              </tr>
+                                          {% endfor %}
+                                      </table>
+                                  </td></tr>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              {% empty %}
+                  <a class="btn btn-block btn-lg btn-default btn-block"><b>{% trans "no data available" %}</b></a>
+              {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock container %}

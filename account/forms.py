@@ -141,8 +141,8 @@ class NRF24Form(forms.Form):
 
 
 class CLabPinForm(forms.Form):
-    c_lab_pin1 = GastroPinField(label=_('New c-lab PIN'))
-    c_lab_pin2 = GastroPinField(label=_('Repeat c-lab PIN'),
+    c_lab_pin1 = GastroPinField(label=_('New indoor PIN'))
+    c_lab_pin2 = GastroPinField(label=_('Repeat indoor PIN'),
             help_text=_('Numerical only, 4 to 8 digits'))
 
 

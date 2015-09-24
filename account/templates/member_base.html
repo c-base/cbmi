@@ -26,7 +26,7 @@
             </li>
             {% url account.views.clabpin as clab_url %}
             <li class="{% if request.path == clab_url %}active{% endif %}">
-                <a href="{{ clab_url }}">{% trans "c-lab-PIN" %}</a>
+                <a href="{{ clab_url }}">{% trans "Indoor-PIN" %}</a>
             </li>
             {% url account.views.nrf24 as nrf24_url %}
             <li class="{% if request.path == nrf24_url %}active{% endif %}">
@@ -50,7 +50,7 @@
 
     <hr />
     <div class="row pull-right">
-        <small class="muted">Copyright &copy; 2013 by c-base e.V.</small>
+        <small class="muted">Copyright &copy; 2015 by c-base e.V.</small>
     </div>
     </div><!-- /.container -->
 {% endblock body %}

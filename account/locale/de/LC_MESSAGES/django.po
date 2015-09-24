@@ -105,12 +105,12 @@ msgid "Your r0ket's NRF24 identification"
 msgstr "Die NRF24-ID deiner r0ket"
 
 #: forms.py:130
-msgid "New c-lab PIN"
-msgstr "Neue c-lab-PIN"
+msgid "New indoor PIN"
+msgstr "Neue innentür-PIN"
 
 #: forms.py:131
-msgid "Repeat c-lab PIN"
-msgstr "c-lab-PIN wiederholen"
+msgid "Repeat indoor PIN"
+msgstr "Innentür-PIN wiederholen"
 
 #: forms.py:149
 msgid "Select the username for whom you want to reset the password."
@@ -192,12 +192,12 @@ msgid "This crewname is still available."
 msgstr "Dieser Crewname ist noch zu haben."
 
 #: templates/clabpin.html:5
-msgid "c-lab PIN"
-msgstr "c-lab-PIN"
+msgid "Indoor PIN"
+msgstr "Innentür-PIN"
 
 #: templates/clabpin.html:8
-msgid "Change your c-lab PIN to access the c-lab in the basement."
-msgstr "PIN ändern für den Zugang zum c-lab im Keller."
+msgid "Change your PIN to access rooms secured with PIN-pad."
+msgstr "PIN ändern für den Zugang zu PIN-pad-geschützten Räumen."
 
 #: templates/gastropin.html:5
 msgid "Gastro PIN"
@@ -331,8 +331,8 @@ msgid "RFID"
 msgstr ""
 
 #: templates/member_base.html:29
-msgid "c-lab-PIN"
-msgstr "c-lab-PIN"
+msgid "Indoor-PIN"
+msgstr "Innentür-PIN"
 
 #: templates/member_base.html:33 templates/nrf24.html:5
 msgid "NRF24"

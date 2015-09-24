@@ -4,6 +4,8 @@
 import os
 import hashlib
 import smbpasswd
+import requests
+import collections
 
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
@@ -82,9 +84,16 @@ def auth_login(request):
 def home(request):
     member = retrieve_member(request)
     number_of_members = member.get_number_of_members()
+    password = get_ldap_password(request)
+    username = request.user.username
+    url = "https://vorstand.c-base.org/cteward-api/legacy/member/%s" % username
+    r = requests.get(url, verify=False, auth=(username, password))
+    cteward = r.json()
     context = {'member': member.to_dict(),
         'groups': sorted(list(request.user.groups.all())),
-        'number_of_members': number_of_members}
+        'number_of_members': number_of_members,
+        'cteward': cteward,
+    }
     return render(request, 'home.html', context)
 
 @login_required
@@ -151,8 +160,11 @@ def gastropin(request):
 
 @login_required
 def clabpin(request):
-    if not (request.user.profile.is_clab_member or request.user.profile.is_cey_member):
-    #if not request.user.profile.is_clab_member:
+    if not (
+            request.user.profile.is_clab_member or 
+            request.user.profile.is_cey_member or
+            request.user.profile.is_soundlab_member
+            ):
         return render(request, 'access_denied.html')
 
     def calculate_clab_hash(pin):
@@ -280,3 +292,24 @@ def admin(request):
 
 def hammertime(request):
     return render(request, 'hammertime.html', {})
+
+@login_required
+def memberstatus(request):
+    #url = baseurl + route_operation_mapping['SessionCreate']['Route']
+    #data = json.dumps({'UserLogin': username, 'Password': password})
+    password = get_ldap_password(request)
+    username = request.user.username
+
+    url = "https://vorstand.c-base.org/cteward-api/legacy/member/%s/contributions" % username
+    r = requests.get(url, verify=False, auth=(username, password))
+    contributions = r.json()
+    years = collections.OrderedDict(sorted(contributions['years'].items(), reverse=True))
+    contributions['years'] = years.items()
+
+    url = "https://vorstand.c-base.org/cteward-api/legacy/member/%s" % username
+    r = requests.get(url, verify=False, auth=(username, password))
+    cteward = r.json()
+
+    return render(request, 'memberstatus.html', {'contributions': contributions, 'cteward': cteward})
+
+    

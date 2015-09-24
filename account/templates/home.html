@@ -37,21 +37,36 @@
 
             <h3>{% trans "Management information" %}</h3>
 
-            <ul>
-                <li>{% trans "Name:" %}
-                    {{ member.displayName }}
-                </li>
-                <li>
-                    {% trans "External e-mail address:" %}
-                    {{ member.externalEmail }}<br>
+            <table class="table table-condensed table-bordered table-hover">
+                <tr><td>{% trans "Crewname:" %}</td><td>{{ cteward.Crewname }}</td></tr>
+                <tr><td>{% trans "Membership Number:" %}</td><td>{{ cteward.Mitgliedsnummer }}</td></tr>
+                <tr><td>{% trans "Status:" %}</td><td>{{ cteward.Status }}</td></tr>
+                <tr>
+                  <td>{% trans "External e-mail address:" %}</td><td>{{ member.externalEmail }}</td>
+                  <!--<td>
                     <span class="muted">{% blocktrans %}The external e-mail address is used by the
                     board of c-base to reach you in cases where your c-base
                     address (see above) is not working. To change your
                     external e-mail address please contact the c-base board via {% endblocktrans %}
                     (<a href="mailto:cash@c-base.org">cash@c-base.org</a>).</span>
-                </li>
-            </ul>
-
+                  </td>-->
+                </tr>
+                <tr><td>{% trans "Firstname:" %}</td><td>{{ cteward.Vorname }}</td></tr>
+                <tr><td>{% trans "Lastname:" %}</td><td>{{ cteward.Nachname }}</td></tr>
+                <tr><td>{% trans "Street:" %}</td><td>{{ cteward.Strasse }}</td></tr>
+                <tr><td>{% trans "Postcode:" %}</td><td>{{ cteward.PLZ }}</td></tr>
+                <tr><td>{% trans "City:" %}</td><td>{{ cteward.Ort }}</td></tr>
+                <tr><td>{% trans "Gender:" %}</td><td>{{ cteward.Geschlecht }}</td></tr>
+                <tr><td>{% trans "Birth Date:" %}</td><td>{{ cteward.Geburtsdatum }}</td></tr>
+                <tr><td>{% trans "Entry Date:" %}</td><td>{{ cteward.Eintritt }}</td></tr>
+                <tr><td>{% trans "Godfather:" %}</td><td>{{ cteward.Paten }}</td></tr>
+                <tr><td>{% trans "Payment Method:" %}</td><td>{{ cteward.Zahlungsart }}</td></tr>
+                <tr><td>{% trans "Payment Frequency:" %}</td><td>{{ cteward.Zahlungsweise }}</td></tr>
+                <tr><td>{% trans "Debit Authorization:" %}</td><td>{{ cteward.Lastschriftmandat }}</td></tr>
+                <tr><td>{% trans "Bank:" %}</td><td>{{ cteward.Bank }}</td></tr>
+                <tr><td>{% trans "IBAN:" %}</td><td>{{ cteward.IBAN }}</td></tr>
+                <tr><td>{% trans "BIC:" %}</td><td>{{ cteward.BIC }}</td></tr>
+            </table>
         </div>
     </div>
 {% endblock container %}
