@@ -178,7 +178,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'jsonrpc',
+    #'jsonrpc',     # STUBBED due to django-1.8.4 upgraded
     'crispy_forms',
     # 'cbmi',
     'account',
