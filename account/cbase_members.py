@@ -177,7 +177,7 @@ class MemberValues(object):
                         result_set.append(result_data)
 
             # list comprehension to get a list of user tupels in the format ("nickname", "nickname (real name)")
-            userlist = [(x[0][1]['uid'][0], '%s (%s)' % (x[0][1]['uid'][0], x[0][1]['cn'][0])) for x in result_set]
+            userlist = [(x[0][1]['uid'][0], '%s (%s, %s)' % (x[0][1]['uid'][0], x[0][1]['cn'][0], x[0][1]['uidNumber'][0])) for x in result_set]
             return sorted(userlist)
         except:
             return []
