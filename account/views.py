@@ -303,8 +303,10 @@ def memberstatus(request):
     url = "https://vorstand.c-base.org/cteward-api/legacy/member/%s/contributions" % username
     r = requests.get(url, verify=False, auth=(username, password))
     contributions = r.json()
-    years = collections.OrderedDict(sorted(contributions['years'].items(), reverse=True))
-    contributions['years'] = years.items()
+    try:
+        years = collections.OrderedDict(sorted(contributions['years'].items(), reverse=True))
+        contributions['years'] = years.items()
+    except: pass
 
     url = "https://vorstand.c-base.org/cteward-api/legacy/member/%s" % username
     r = requests.get(url, verify=False, auth=(username, password))

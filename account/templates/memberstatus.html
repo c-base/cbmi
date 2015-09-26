@@ -4,30 +4,41 @@
 {% block container %}
     <div class="row">
         <div class="col-md-12">
-            <h3>{% trans "Basic information about your account" %}</h3>
-
-            {{ contributions }}
-
-            <table class="table table-condensed table-bordered table-hover">
-                <tr><td>{% trans "Crewname:" %}</td><td>{{ cteward.Crewname }}</td></tr>
-                <tr><td>{% trans "Membership Number:" %}</td><td>{{ cteward.Mitgliedsnummer }}</td></tr>
-                <tr><td>{% trans "Status:" %}</td><td>{{ cteward.Status }}</td></tr>
-                <tr><td>{% trans "Firstname:" %}</td><td>{{ cteward.Vorname }}</td></tr>
-                <tr><td>{% trans "Lastname:" %}</td><td>{{ cteward.Nachname }}</td></tr>
-                <tr><td>{% trans "Street:" %}</td><td>{{ cteward.Strasse }}</td></tr>
-                <tr><td>{% trans "Postcode:" %}</td><td>{{ cteward.PLZ }}</td></tr>
-                <tr><td>{% trans "City:" %}</td><td>{{ cteward.Ort }}</td></tr>
-                <tr><td>{% trans "Gender:" %}</td><td>{{ cteward.Geschlecht }}</td></tr>
-                <tr><td>{% trans "Birth Date:" %}</td><td>{{ cteward.Geburtsdatum }}</td></tr>
-                <tr><td>{% trans "Entry Date:" %}</td><td>{{ cteward.Eintritt }}</td></tr>
-                <tr><td>{% trans "Godfather:" %}</td><td>{{ cteward.Paten }}</td></tr>
-                <tr><td>{% trans "Payment Method:" %}</td><td>{{ cteward.Zahlungsart }}</td></tr>
-                <tr><td>{% trans "Payment Frequency:" %}</td><td>{{ cteward.Zahlungsweise }}</td></tr>
-                <tr><td>{% trans "Debit Authorization:" %}</td><td>{{ cteward.Lastschriftmandat }}</td></tr>
-                <tr><td>{% trans "Bank:" %}</td><td>{{ cteward.Bank }}</td></tr>
-                <tr><td>{% trans "IBAN:" %}</td><td>{{ cteward.IBAN }}</td></tr>
-                <tr><td>{% trans "BIC:" %}</td><td>{{ cteward.BIC }}</td></tr>
-            </table>
+            <div class="panel-group" id="basic-accordion">
+              <div class="panel panel-default">
+                  <a class="btn btn-lg btn-default btn-block" data-toggle="collapse" data-parent="#basic-accordion" href="#basic">{% trans "Basic information about your account" %}</a>
+                  <div id="basic" class="panel-collapse">
+                      <div class="terminal">
+                          <table class="table table-condensed table-bordered table-hover">
+                              <tr><td>{% trans "Crewname:" %}</td><td>{{ cteward.Crewname }}</td></tr>
+                              <tr><td>{% trans "Membership Number:" %}</td><td>{{ cteward.Mitgliedsnummer }}</td></tr>
+                              <tr><td>{% trans "Status:" %}</td><td>{{ cteward.Status }}</td></tr>
+                              <tr><td>{% trans "Firstname:" %}</td><td>{{ cteward.Vorname }}</td></tr>
+                              <tr><td>{% trans "Lastname:" %}</td><td>{{ cteward.Nachname }}</td></tr>
+                              <tr><td>{% trans "Street:" %}</td><td>{{ cteward.Strasse }}</td></tr>
+                              <tr><td>{% trans "Postcode:" %}</td><td>{{ cteward.PLZ }}</td></tr>
+                              <tr><td>{% trans "City:" %}</td><td>{{ cteward.Ort }}</td></tr>
+                              <tr><td>{% trans "Gender:" %}</td><td>{{ cteward.Geschlecht }}</td></tr>
+                              <tr><td>{% trans "Birth Date:" %}</td><td>{{ cteward.Geburtsdatum }}</td></tr>
+                              <tr><td>{% trans "Entry Date:" %}</td><td>{{ cteward.Eintritt }}</td></tr>
+                              <tr><td>{% trans "Godfather:" %}</td><td>{{ cteward.Paten|join:", " }}</td></tr>
+                              <tr><td>{% trans "Payment Method:" %}</td><td>{{ cteward.Zahlungsart }}</td></tr>
+                              <tr><td>{% trans "Payment Frequency:" %}</td><td>{{ cteward.Zahlungsweise }}</td></tr>
+                              <tr><td>{% trans "Debit Authorization:" %}</td><td>{{ cteward.Lastschriftmandat }}</td></tr>
+                              <tr><td>{% trans "Bank:" %}</td><td>{{ cteward.Bank }}</td></tr>
+                              <tr><td>{% trans "IBAN:" %}</td><td>{{ cteward.IBAN }}</td></tr>
+                              <tr><td>{% trans "BIC:" %}</td><td>{{ cteward.BIC }}</td></tr>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+           </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+             <br>
+             <a class="btn btn-lg btn-danger btn-block" data-toggle="collapse" data-parent="#accordion" href="#total">{% trans "DISCLAIMER: due to crappy association management software, the data below is only a rough estimate. c-base cannot take responsibility for the correctness of this information." %}</a>
         </div>
     </div>
     <div class="row">
