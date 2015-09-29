@@ -4,41 +4,41 @@
 {% block body %}
     <div class="container">
         <ul class="nav nav-tabs">
-            {% url account.views.home as home_url %}
+            {% url 'home' as home_url %}
             <li class="{% if request.path == home_url %}active{% endif %}">
                 <a href="{{ home_url }}">{% trans "Home" %}</a>
             </li>
-            {% url account.views.password as password_url %}
+            {% url 'password' as password_url %}
             <li class="{% if request.path == password_url %}active{% endif %}">
                 <a href="{{ password_url }}">{% trans "Password" %}</a>
             </li>
-            {% url account.views.gastropin as gastro_url %}
+            {% url 'gastropin' as gastro_url %}
             <li class="{% if request.path == gastro_url %}active{% endif %}">
                 <a href="{{ gastro_url }}">{% trans "Gastro-PIN" %}</a>
             </li>
-            {% url account.views.wlan_presence as wlan_presence_url %}
+            {% url 'wlan_presence' as wlan_presence_url %}
             <li class="{% if request.path == wlan_presence_url %}active{% endif %}">
                 <a href="{{ wlan_presence_url }}">{% trans "WiFi presence" %}</a>
             </li>
-            {% url account.views.rfid as rfid_url %}
+            {% url 'rfid' as rfid_url %}
             <li class="{% if request.path == rfid_url %}active{% endif %}">
                 <a href="{{ rfid_url }}">{% trans "RFID" %}</a>
             </li>
-            {% url account.views.clabpin as clab_url %}
+            {% url 'clabpin' as clab_url %}
             <li class="{% if request.path == clab_url %}active{% endif %}">
                 <a href="{{ clab_url }}">{% trans "c-lab-PIN" %}</a>
             </li>
-            {% url account.views.nrf24 as nrf24_url %}
+            {% url 'nrf24' as nrf24_url %}
             <li class="{% if request.path == nrf24_url %}active{% endif %}">
                 <a href="{{ nrf24_url }}">{% trans "NRF24" %}</a>
             </li>
-            {% url account.views.sippin as sippin_url %}
+            {% url 'sippin' as sippin_url %}
             <li class="{% if request.path == sippin_url %}active{% endif %}">
                 <a href="{{ sippin_url }}">{% trans "SIP-PIN" %}</a>
             </li>
             {%  for group in request.user.groups.all %}
                 {%  if group.name == 'ldap_admins' %}
-                    {% url account.views.admin as admin_url %}
+                    {% url 'admin' as admin_url %}
                     <li class="{% if request.path == admin_url %}active{% endif %}">
                         <a href="{{ admin_url }}"><i class="icon icon-white icon-star"></i>
                             {% trans "Admin" %}</a>

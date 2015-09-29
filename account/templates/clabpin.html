@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block form_fields %}
-    <form action="{% url account.views.clabpin %}" method="post" class="form-horizontal well">
+    <form action="{% url 'clabpin' %}" method="post" class="form-horizontal well">
         {% csrf_token %}
         {{ form|crispy }}
 
