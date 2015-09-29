@@ -119,7 +119,7 @@
             <div class="span4">
                 <div class="well">
                 <h4>Login</h4>
-                    <form class="form" action="/account/login/?next={% url account.views.home %}"
+                    <form class="form" action="/account/login/?next=/"
                           method="post">
                         {% csrf_token %}
                         {{ login_form|crispy }}

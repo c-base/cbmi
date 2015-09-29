@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block form_fields %}
-    <form action="{% url account.views.nrf24 %}" method="post" class="form-horizontal well">
+    <form action="{% url 'nrf24' %}" method="post" class="form-horizontal well">
         {% csrf_token %}
         {{ form|crispy }}
 

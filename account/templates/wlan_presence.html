@@ -12,7 +12,7 @@
 
 {% block form_fields %}
     {{ form.non_field_errors }}
-    <form action="{% url account.views.wlan_presence %}" method="post" class="form-horizontal well">
+    <form action="{% url 'wlan_presence' %}" method="post" class="form-horizontal well">
         {% csrf_token %}
         {{ form|crispy }}
 
