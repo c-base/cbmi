@@ -147,6 +147,7 @@ class CLabPinForm(forms.Form):
 
 
 class AdminForm(forms.Form):
+    username = forms.ChoiceField(choices=[])
     password1 = forms.CharField(max_length=255, widget=forms.PasswordInput,
         label=_('New password'))
     password2 = forms.CharField(max_length=255, widget=forms.PasswordInput,
@@ -159,8 +160,10 @@ class AdminForm(forms.Form):
         choices = [x for x in self._users]
         choices.insert(0, ('', 'Select username ...'))
         super(AdminForm, self).__init__(*args, **kwargs)
-        self.fields.insert(0, 'username', forms.ChoiceField(choices=choices,
-            help_text=_('Select the username for whom you want to reset the password.')))
+        #self.fields.insert(0, 'username', forms.ChoiceField(choices=choices,
+            #help_text=_('Select the username for whom you want to reset the password.')))
+        self.fields['username'] =  forms.ChoiceField(choices=choices,
+            help_text=_('Select the username for whom you want to reset the password.'))
 
     def clean(self):
         cleaned_data = super(AdminForm, self).clean()
