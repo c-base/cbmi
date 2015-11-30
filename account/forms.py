@@ -147,9 +147,9 @@ class CLabPinForm(forms.Form):
 
 
 class PreferredEmailForm(forms.Form):
-    preferred_email = forms.CharField(max_length=255, required=False,
+    preferred_email = forms.EmailField(max_length=255, required=False,
         label = _('Preferred e-mail'),
-        help_text=_("Forward my mail to this address."))
+        help_text=_("Forward my mail to this address. Leave empty to use the c-base IMAP and SMTP servers."))
 
 
 class AdminForm(forms.Form):

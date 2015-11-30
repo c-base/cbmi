@@ -36,6 +36,10 @@
             <li class="{% if request.path == sippin_url %}active{% endif %}">
                 <a href="{{ sippin_url }}">{% trans "SIP-PIN" %}</a>
             </li>
+            {% url 'preferred_email' as preferred_email_url %}
+            <li class="{% if request.path == preferred_email_url %}active{% endif %}">
+                <a href="{{ preferred_email_url }}">{% trans "Preferred e-mail" %}</a>
+            </li>
             {%  for group in request.user.groups.all %}
                 {%  if group.name == 'ldap_admins' %}
                     {% url 'admin' as admin_url %}
