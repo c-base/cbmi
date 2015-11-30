@@ -51,12 +51,17 @@ class MemberValues(object):
             return value
 
     def set(self, key, value):
+        if value == None:
+            self._new[key] = [None]
+            return
+
         converted_value = value
         if isinstance(value, bool):
             if value == True:
                 converted_value = 'TRUE'
             else:
                 converted_value = 'FALSE'
+
         self._new[key] = [converted_value.encode('latin-1')]
 
     def save(self):
@@ -76,11 +81,16 @@ class MemberValues(object):
                 action = ldap.MOD_ADD
                 mod_attrs.append((action, '%s' % new_key, new_value ))
                 continue
+            if self._old[new_key][0] != None and new_value == [None]:
+                action = ldap.MOD_DELETE
+                mod_attrs.append((action, '%s' % new_key, []))
+                continue
             # Set the attribute and wait for the LDAP server to complete.
             if self._old[new_key][0] != new_value[0]:
                 action = ldap.MOD_REPLACE
                 mod_attrs.append((action, '%s' % new_key, new_value ))
                 continue
+
 
         print "modattrs: ",mod_attrs
         result = l.modify_s(dn, mod_attrs)

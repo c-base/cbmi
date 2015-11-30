@@ -5,35 +5,39 @@ from account.signals import create_profile, delete_profile
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, editable=False)
-    uid = models.CharField("User-ID",
+    uid = models.CharField(verbose_name="User-ID",
                            max_length=8,
                            null=True,
                            default=None)
-    sippin = models.CharField("SIP PIN",
+    sippin = models.CharField(verbose_name="SIP PIN",
                               max_length=255,
                               null=True,
                               blank=True,
                               default=None)
-    gastropin = models.CharField("Gastro PIN",
+    gastropin = models.CharField(verbose_name="Gastro PIN",
                                  max_length=255,
                                  null=True,
                                  blank=True,
                                  default=None)
-    rfid = models.CharField("RFID",
+    rfid = models.CharField(verbose_name="RFID",
                             max_length=255,
                             null=True,
                             blank=True,
                             default=None)
-    macaddress = models.CharField("MAC-Address",
+    macaddress = models.CharField(verbose_name="MAC-Address",
                                   max_length=255,
                                   null=True,
                                   blank=True,
                                   default=None)
-    clabpin = models.CharField("c-lab PIN",
+    clabpin = models.CharField(verbose_name="c-lab PIN",
                                max_length=255,
                                null=True,
                                blank=True,
                                default=None)
+    preferred_email = models.CharField(verbose_name="preferred e-mail address",
+                                       max_length=1024,
+                                       null=True,
+                                       default=None)
     is_member = models.BooleanField(default=False, editable=False)
     is_ldap_admin = models.BooleanField(default=False, editable=False)
     is_circle_member = models.BooleanField(default=False, editable=False)

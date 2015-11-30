@@ -20,7 +20,7 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
 from forms import GastroPinForm, WlanPresenceForm, LoginForm, PasswordForm, \
-    RFIDForm, NRF24Form, SIPPinForm, CLabPinForm, AdminForm
+    RFIDForm, NRF24Form, SIPPinForm, CLabPinForm, AdminForm, PreferredEmailForm
 from cbase_members import retrieve_member, MemberValues
 from password_encryption import *
 
@@ -226,7 +226,10 @@ def set_ldap_field(request, form_type, field_names, template_name):
         if form.is_valid():
 
             for form_field, ldap_field in field_names:
-                member.set(ldap_field, form.cleaned_data[form_field])
+                if form.cleaned_data[form_field] == '':
+                    member.set(ldap_field, None)
+                else:
+                    member.set(ldap_field, form.cleaned_data[form_field])
                 initial[form_field] = member.get(ldap_field)
             member.save()
             new_form = form_type(initial=initial)
@@ -255,6 +258,11 @@ def rfid(request):
 @login_required
 def nrf24(request):
     return set_ldap_field(request, NRF24Form, [('nrf24', 'nrf24')], 'nrf24.html')
+
+@login_required
+def preferred_email(request):
+    return set_ldap_field(request, PreferredEmailForm, [('preferred_email', 'preferredEmail')],
+                          'preferred_email.html')
 
 @login_required
 def admin(request):

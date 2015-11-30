@@ -146,6 +146,12 @@ class CLabPinForm(forms.Form):
             help_text=_('Numerical only, 4 to 8 digits'))
 
 
+class PreferredEmailForm(forms.Form):
+    preferred_email = forms.CharField(max_length=255, required=False,
+        label = _('Preferred e-mail'),
+        help_text=_("Forward my mail to this address."))
+
+
 class AdminForm(forms.Form):
     username = forms.ChoiceField(choices=[])
     password1 = forms.CharField(max_length=255, widget=forms.PasswordInput,

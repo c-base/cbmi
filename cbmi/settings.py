@@ -161,6 +161,7 @@ AUTH_LDAP_PROFILE_ATTR_MAP = {
     "rfid": "rfid",
     "macaddress": "macAddress",
     "clabpin": "c-labPIN",
+    "preferred_email": "preferredEmail",
 }
 
 AUTHENTICATION_BACKENDS = (

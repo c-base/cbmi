@@ -12,6 +12,7 @@ urlpatterns = patterns(
     url(r'^password/$', 'account.views.password', name='password'),
     url(r'^sippin/$', 'account.views.sippin', name='sippin'),
     url(r'^clabpin/$', 'account.views.clabpin', name='clabpin'),
+    url(r'^preferred_email/$', 'account.views.preferred_email', name='preferred_email'),
     url(r'^admin/$', 'account.views.admin', name='admin'),
     url(r'^memberstatus/$', 'account.views.memberstatus', name='memberstatus'),
     url(r'^$', 'account.views.home', name="home"),
