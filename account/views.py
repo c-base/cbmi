@@ -160,11 +160,7 @@ def gastropin(request):
 
 @login_required
 def clabpin(request):
-    if not (
-            request.user.profile.is_clab_member or 
-            request.user.profile.is_cey_member or
-            request.user.profile.is_soundlab_member
-            ):
+    if len(request.user.groups.filter(name__in=['cey-c-lab', 'cey-schleuse', 'cey-soundlab'])) < 1:
         return render(request, 'access_denied.html')
 
     def calculate_clab_hash(pin):
@@ -267,7 +263,7 @@ def preferred_email(request):
 @login_required
 def admin(request):
     admin_member = retrieve_member(request)
-    if not request.user.profile.is_ldap_admin:
+    if len(request.user.groups.filter(name__in=['ldap_admins'])) < 1:
         return render(request, 'access_denied.html')
     users = admin_member.list_users()
     if request.method == 'POST':
