@@ -125,7 +125,7 @@ from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
 AUTH_LDAP_SERVER_URI = "ldap://lea.cbrp3.c-base.org"
 AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=crew,dc=c-base,dc=org"
-AUTH_LDAP_START_TLS = True
+AUTH_LDAP_START_TLS = False
 AUTH_LDAP_BIND_AS_AUTHENTICATING_USER = True
 
 AUTH_LDAP_CACHE_GROUPS = True
@@ -138,7 +138,8 @@ AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
 )
 AUTH_LDAP_REQUIRE_GROUP = "cn=crew,ou=groups,dc=c-base,dc=org"
 AUTH_LDAP_GROUP_TYPE = GroupOfNamesType(name_attr="cn")
-AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
+#AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
+AUTH_LDAP_USER_FLAGS_BY_GROUP = {
     "is_member": "cn=crew,ou=groups,dc=c-base,dc=org",
     "is_ldap_admin": "cn=ldap_admins,ou=groups,dc=c-base,dc=org",
     "is_circle_member": "cn=circle,ou=groups,dc=c-base,dc=org",
