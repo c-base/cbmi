@@ -87,8 +87,12 @@ def home(request):
     password = get_ldap_password(request)
     username = request.user.username
     url = "https://vorstand.c-base.org/cteward-api/legacy/member/%s" % username
-    r = requests.get(url, verify=False, auth=(username, password))
-    cteward = r.json()
+    cteward = None
+    #try:
+        #r = requests.get(url, verify=False, auth=(username, password))
+        #cteward = r.json()
+    #except:
+        #pass
     context = {'member': member.to_dict(),
         'groups': sorted(list(request.user.groups.all())),
         'number_of_members': number_of_members,
