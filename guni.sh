@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 LOGFILE=/home/cbmi/cbmi/cbmi.log
 LOGDIR=$(dirname $LOGFILE)
 NUM_WORKERS=3
@@ -13,7 +13,7 @@ source /home/cbmi/cbmi/bin/activate
 cd /home/cbmi/cbmi
 test -d $LOGDIR || mkdir -p $LOGDIR
 echo "foo"
-exec gunicorn -w $NUM_WORKERS --bind=$ADDRESS \
+exec bin/gunicorn -w $NUM_WORKERS --bind=$ADDRESS \
   --user=$USER --group=$GROUP --log-level=debug \
   cbmi.wsgi:application \
   --log-file=$LOGFILE 2>>$LOGFILE
