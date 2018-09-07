@@ -164,8 +164,8 @@ def gastropin(request):
 
 @login_required
 def clabpin(request):
-    if len(request.user.groups.filter(name__in=['cey-c-lab', 'cey-schleuse', 'cey-soundlab'])) < 1:
-        return render(request, 'access_denied.html')
+    # if len(request.user.groups.filter(name__in=['cey-c-lab', 'cey-schleuse', 'cey-soundlab'])) < 1:
+    #     return render(request, 'access_denied.html')
 
     def calculate_clab_hash(pin):
         salt = os.urandom(12)
