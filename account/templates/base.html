@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% load static from staticfiles %}
 
 <!DOCTYPE html>
 <html lang="de">
@@ -66,7 +67,7 @@
                 <span class="icon-bar"></span>
             </a>
             <span class="brand"><a href="/"><img style="margin-top: -10px;"
-                src="{{ STATIC_URL }}img/logo.gif" /></a>
+                src="{%  static 'img/logo.gif' %}" /></a>
                 <a href="/">{% trans "member interface" %}</a>
             </span>
             <div class="nav-collapse collapse">

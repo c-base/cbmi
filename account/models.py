@@ -4,7 +4,7 @@ from django.db.models import signals
 from account.signals import create_profile, delete_profile
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, editable=False)
+    user = models.OneToOneField(User, editable=False, on_delete=models.CASCADE)
     uid = models.CharField(verbose_name="User-ID",
                            max_length=8,
                            null=True,

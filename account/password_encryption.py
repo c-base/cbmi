@@ -26,7 +26,7 @@ def encrypt_ldap_password(cleartext_pw):
     # do the encryption
     aes = AES.new(key, AES.MODE_CFB, iv)
     message = iv + aes.encrypt(cleartext_pw)
-    return base64.b64encode(message), base64.b64encode(key)
+    return base64.b64encode(message).decode(), base64.b64encode(key).decode()
 
 def decrypt_ldap_password(message, key):
     """

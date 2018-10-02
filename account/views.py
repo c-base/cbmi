@@ -19,13 +19,13 @@ from django.contrib.auth.models import Group
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
-from forms import GastroPinForm, WlanPresenceForm, LoginForm, PasswordForm, \
+from account.forms import GastroPinForm, WlanPresenceForm, LoginForm, PasswordForm, \
     RFIDForm, NRF24Form, SIPPinForm, CLabPinForm, AdminForm, PreferredEmailForm
-from cbase_members import retrieve_member, MemberValues
-from password_encryption import *
+from account.cbase_members import retrieve_member, MemberValues
+from account.password_encryption import *
 
 def landingpage(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return HttpResponseRedirect('/account')
     login_form = LoginForm()
     try:
@@ -77,8 +77,7 @@ def auth_login(request):
     else:
         form = LoginForm()
 
-    return render_to_response('login.html',
-            RequestContext(request, locals()))
+    return render_to_response('login.html', locals())
 
 @login_required
 def home(request):
@@ -88,13 +87,13 @@ def home(request):
     username = request.user.username
     url = "https://vorstand.c-base.org/cteward-api/legacy/member/%s" % username
     cteward = None
-    #try:
-        #r = requests.get(url, verify=False, auth=(username, password))
-        #cteward = r.json()
-    #except:
-        #pass
+    try:
+        r = requests.get(url, verify=False, auth=(username, password))
+        cteward = r.json()
+    except Exception:
+        pass
     context = {'member': member.to_dict(),
-        'groups': sorted(list(request.user.groups.all())),
+        'groups': list(request.user.groups.all().order_by('name')),
         'number_of_members': number_of_members,
         'cteward': cteward,
     }
@@ -137,7 +136,7 @@ def set_hash_field(request, form_type, in_field, out_field, hash_func,
         form = form_type(request.POST)
         if form.is_valid():
             hashed_value = hash_func(form.cleaned_data[in_field])
-            print 'hashed value: ', hashed_value
+            print('hashed value: ', hashed_value)
             member.set(out_field, hashed_value)
             member.save()
             new_form = form_type(initial=initial)

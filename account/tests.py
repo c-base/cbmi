@@ -19,8 +19,8 @@ class PasswordEncryptionTest(TestCase):
 
     def test_encrypt_ldap_password(self):
         message, key = self.encrypt_it()
-        print 'key:', key
-        print 'message:', message
+        print('key:', key)
+        print('message:', message)
 
 
     def test_decrypt_ldap_password(self):

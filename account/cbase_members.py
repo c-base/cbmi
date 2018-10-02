@@ -5,7 +5,7 @@ import ldap
 import copy
 
 from django.conf import settings
-from password_encryption import get_ldap_password
+from account.password_encryption import get_ldap_password
 
 """
 Example configuration:
@@ -14,11 +14,12 @@ CBASE_LDAP_URL = 'ldap://lea.cbrp3.c-base.org:389/'
 CBASE_BASE_DN = 'ou=crew,dc=c-base,dc=org'
 """
 
+
 def retrieve_member(request):
     ldap_password = get_ldap_password(request)
     session = dict(request.session)
-    print "session:", session
-    print "cookies:", request.COOKIES
+    print("session:", session)
+    print("cookies:", request.COOKIES)
     return MemberValues(request.user.username, ldap_password)
 
 
@@ -26,6 +27,7 @@ class MemberValues(object):
     """
     Dictionary-like abstraction of the c-base member attributes.
     """
+
     def __init__(self, username, password):
         self._username = username
         self._password = password
@@ -41,6 +43,9 @@ class MemberValues(object):
             value = value_list[0]
         else:
             value = default
+
+        if value is not None:
+            value = value.decode()
 
         # Decode
         if value == 'TRUE':
@@ -79,7 +84,7 @@ class MemberValues(object):
             action = ldap.MOD_REPLACE
             if new_key not in self._old.keys():
                 action = ldap.MOD_ADD
-                mod_attrs.append((action, '%s' % new_key, new_value ))
+                mod_attrs.append((action, '%s' % new_key, new_value))
                 continue
             if self._old[new_key][0] != None and new_value == [None]:
                 action = ldap.MOD_DELETE
@@ -88,14 +93,13 @@ class MemberValues(object):
             # Set the attribute and wait for the LDAP server to complete.
             if self._old[new_key][0] != new_value[0]:
                 action = ldap.MOD_REPLACE
-                mod_attrs.append((action, '%s' % new_key, new_value ))
+                mod_attrs.append((action, '%s' % new_key, new_value))
                 continue
 
-
-        print "modattrs: ",mod_attrs
+        print("modattrs: ", mod_attrs)
         result = l.modify_s(dn, mod_attrs)
         #
-        # print "result is: ", result
+        # print("result is: ", result)
         l.unbind_s()
 
     def change_password(self, new_password):
@@ -142,9 +146,10 @@ class MemberValues(object):
         searchFilter = "uid=%s" % self._username
 
         dn = settings.CBASE_BASE_DN
-        result = session.search_s(dn, searchScope, searchFilter, retrieveAttributes)
+        result = session.search_s(
+            dn, searchScope, searchFilter, retrieveAttributes)
         # TODO: latin1
-        print "result is: ", result
+        print("result is: ", result)
         # TODO: if len(result)==0
         session.unbind_s()
         return result[0][1]
@@ -176,7 +181,7 @@ class MemberValues(object):
         l.simple_bind_s(user_dn, self._password)
         try:
             result_id = l.search(settings.CBASE_BASE_DN, ldap.SCOPE_SUBTREE,
-                    "memberOf=cn=crew,ou=groups,dc=c-base,dc=org", None)
+                                 "memberOf=cn=crew,ou=groups,dc=c-base,dc=org", None)
             result_set = []
             while True:
                 result_type, result_data = l.result(result_id, 0)
@@ -187,7 +192,14 @@ class MemberValues(object):
                         result_set.append(result_data)
 
             # list comprehension to get a list of user tupels in the format ("nickname", "nickname (real name)")
-            userlist = [(x[0][1]['uid'][0], '%s (%s, %s)' % (x[0][1]['uid'][0], x[0][1]['cn'][0], x[0][1]['uidNumber'][0])) for x in result_set]
+            userlist = [(
+                x[0][1]['uid'][0].decode(),
+                '%s (%s, %s)' % (
+                    x[0][1]['uid'][0].decode(),
+                    x[0][1]['cn'][0].decode(),
+                    x[0][1]['uidNumber'][0].decode()
+                )
+            ) for x in result_set]
             return sorted(userlist)
-        except:
+        except Exception:
             return []

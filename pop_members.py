@@ -57,6 +57,6 @@ def populate_members():
     for m in sorted(all_members()):
         member = LDAPBackend().populate_user(m)
         if member:
-            print 'Populated: %s' % member
+            print('Populated: %s' % member)
         else:
-            print 'Not found: %s' % m
+            print('Not found: %s' % m)

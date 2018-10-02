@@ -1,0 +1,10 @@
+#! /bin/bash
+
+cd /opt/cbmi
+
+python /opt/cbmi/manage.py makemigrations
+python /opt/cbmi/manage.py migrate
+
+echo "from django.contrib.auth.models import User; User.objects.filter(email='admin@example.com').delete(); User.objects.create_superuser('admin', 'admin@example.com', 'fooderbar23')" | python /opt/cbmi/manage.py shell
+
+python /opt/cbmi/manage.py runserver 0.0.0.0:8000

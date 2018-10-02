@@ -1,4 +1,5 @@
 # Django settings for cbmi project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -10,14 +11,17 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cbmi',
-        'USER': 'cbmi',
-        'PASSWORD': 'cbmi',
-        'HOST': '',
-        'PORT': '',
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': 'cbmi',
+        # 'USER': 'cbmi',
+        # 'PASSWORD': 'cbmi',
+        # 'HOST': '',
+        # 'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(PROJECT_DIR, 'cbmi.db'),
     }
 }
 
@@ -69,6 +73,7 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     '/home/cbmi/cbmi/static',
+    '/opt/cbmi/static',
 )
 
 # List of finder classes that know how to find static files in
@@ -99,15 +104,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request"
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
 
 ROOT_URLCONF = 'cbmi.urls'
 
@@ -119,6 +123,23 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'builtins': [],
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 import ldap
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
@@ -230,5 +251,5 @@ LOGIN_URL = '/account/login/'
 
 try:
     from local_settings import *
-except ImportError, e:
-    print 'Unable to load local_settings.py:', e
+except ImportError as e:
+    print('Unable to load local_settings.py:', e)
