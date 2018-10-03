@@ -249,7 +249,6 @@ SESSION_COOKIE_AGE = 600
 LOGIN_URL = '/account/login/'
 #LOCALE_PATHS =
 
-print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxXX')
 try:
     from cbmi.local_settings import *
 except ImportError as e:
