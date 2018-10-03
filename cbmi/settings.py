@@ -249,7 +249,8 @@ SESSION_COOKIE_AGE = 600
 LOGIN_URL = '/account/login/'
 #LOCALE_PATHS =
 
+print('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxXX')
 try:
-    from local_settings import *
+    from cbmi.local_settings import *
 except ImportError as e:
     print('Unable to load local_settings.py:', e)
