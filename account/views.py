@@ -136,7 +136,6 @@ def set_hash_field(request, form_type, in_field, out_field, hash_func,
         form = form_type(request.POST)
         if form.is_valid():
             hashed_value = hash_func(form.cleaned_data[in_field])
-            print('hashed value: ', hashed_value)
             member.set(out_field, hashed_value)
             member.save()
             new_form = form_type(initial=initial)
