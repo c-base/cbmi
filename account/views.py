@@ -155,7 +155,7 @@ def gastropin(request):
     def calculate_gastro_hash(pin):
         key = settings.CBASE_GASTRO_KEY
         bla = '%s%s' % (key, pin)
-        return hashlib.sha256(bla).hexdigest()
+        return hashlib.sha256(bla.encode()).hexdigest()
 
     return set_hash_field(request, GastroPinForm,
         'gastropin1', 'gastroPIN', calculate_gastro_hash, 'gastropin.html')
