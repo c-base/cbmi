@@ -72,12 +72,9 @@ def auth_login(request):
                     response = HttpResponseRedirect(redirect_to)
                     response.set_cookie('sessionkey', key)
                     return response
-            else:
-                return render(request, 'login.html', {'form': form})
     else:
         form = LoginForm()
-
-    return render_to_response('login.html', locals())
+    return render(request, 'login.html', {'form': form})
 
 @login_required
 def home(request):
