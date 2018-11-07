@@ -165,7 +165,8 @@ def clabpin(request):
     def calculate_clab_hash(pin):
         salt = os.urandom(12)
         digest = hashlib.sha1(bytearray(pin, 'UTF-8')+salt).digest()
-        return '{SSHA}' + str(base64.b64encode(digest + salt))
+        pin_hash = '{SSHA}%s' % base64.b64encode(digest + salt).decode()
+        return pin_hash
 
     return set_hash_field(request, CLabPinForm, 'c_lab_pin1', 'c-labPIN',
             calculate_clab_hash, 'clabpin.html')
