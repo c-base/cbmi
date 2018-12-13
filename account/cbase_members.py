@@ -79,6 +79,7 @@ class MemberValues(object):
         l.simple_bind_s(dn, self._password)
 
         mod_attrs = []
+        action = None
         for new_key, new_value in self._new.items():
             # Replace is the default.
             action = ldap.MOD_REPLACE
@@ -86,21 +87,23 @@ class MemberValues(object):
                 action = ldap.MOD_ADD
                 mod_attrs.append((action, '%s' % new_key, new_value))
                 continue
-            if self._old[new_key][0] != None and new_value == [None]:
+            if self._old.get([new_key], [None])[0] is not None \
+                    and new_value == [None]:
                 action = ldap.MOD_DELETE
                 mod_attrs.append((action, '%s' % new_key, []))
+                # Set the attribute and wait for the LDAP server to complete.
                 continue
-            # Set the attribute and wait for the LDAP server to complete.
-            if self._old[new_key][0] != new_value[0]:
+            if self._old.get([new_key], [None])[0] != new_value[0]:
                 action = ldap.MOD_REPLACE
                 mod_attrs.append((action, '%s' % new_key, new_value))
                 continue
 
-        print("modattrs: ", mod_attrs)
+        print("action: %s modattrs: %s", action, mod_attrs)
         result = l.modify_s(dn, mod_attrs)
         #
         # print("result is: ", result)
         l.unbind_s()
+        return result  # does not harm any1
 
     def change_password(self, new_password):
         """
