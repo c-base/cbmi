@@ -18,6 +18,7 @@ CBASE_BASE_DN = 'ou=crew,dc=c-base,dc=org'
 def retrieve_member(request):
     ldap_password = get_ldap_password(request)
     session = dict(request.session)
+
     print("session:", session)
     print("cookies:", request.COOKIES)
     return MemberValues(request.user.username, ldap_password)
@@ -87,13 +88,13 @@ class MemberValues(object):
                 action = ldap.MOD_ADD
                 mod_attrs.append((action, '%s' % new_key, new_value))
                 continue
-            if self._old.get([new_key], [None])[0] is not None \
+            if self._old.get(new_key, [None])[0] is not None \
                     and new_value == [None]:
                 action = ldap.MOD_DELETE
                 mod_attrs.append((action, '%s' % new_key, []))
                 # Set the attribute and wait for the LDAP server to complete.
                 continue
-            if self._old.get([new_key], [None])[0] != new_value[0]:
+            if self._old.get(new_key, [None])[0] != new_value[0]:
                 action = ldap.MOD_REPLACE
                 mod_attrs.append((action, '%s' % new_key, new_value))
                 continue
