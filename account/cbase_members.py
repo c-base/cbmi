@@ -56,13 +56,13 @@ class MemberValues(object):
             return value
 
     def set(self, key, value):
-        if value == None:
+        if value is None:
             self._new[key] = [None]
             return
 
         converted_value = value
         if isinstance(value, bool):
-            if value == True:
+            if value:
                 converted_value = 'TRUE'
             else:
                 converted_value = 'FALSE'
@@ -142,15 +142,17 @@ class MemberValues(object):
         session.simple_bind_s(self._get_bind_dn(), self._password)
 
         # Set the attribute and wait for the LDAP server to complete.
-        searchScope = ldap.SCOPE_SUBTREE
+        search_scope = ldap.SCOPE_SUBTREE
 
         # retrieve all attributes
-        retrieveAttributes = None
-        searchFilter = "uid=%s" % self._username
+        retrieve_attributes = None
+        search_filter = "uid=%s" % self._username
 
         dn = settings.CBASE_BASE_DN
         result = session.search_s(
-            dn, searchScope, searchFilter, retrieveAttributes)
+            dn, search_scope, search_filter, retrieve_attributes
+        )
+
         # TODO: latin1
         print("result is: ", result)
         # TODO: if len(result)==0
@@ -179,22 +181,26 @@ class MemberValues(object):
         Returns a list of strings with all usernames in the group 'crew'.
         The list is sorted alphabetically.
         """
-        l = ldap.initialize(settings.CBASE_LDAP_URL)
+        ldap_conn = ldap.initialize(settings.CBASE_LDAP_URL)
         user_dn = self._get_bind_dn()
-        l.simple_bind_s(user_dn, self._password)
+        ldap_conn.simple_bind_s(user_dn, self._password)
         try:
-            result_id = l.search(settings.CBASE_BASE_DN, ldap.SCOPE_SUBTREE,
-                                 "memberOf=cn=crew,ou=groups,dc=c-base,dc=org", None)
+            result_id = ldap_conn.search(
+                settings.CBASE_BASE_DN,
+                ldap.SCOPE_SUBTREE,
+                "memberOf=cn=crew,ou=groups,dc=c-base,dc=org",
+                None
+            )
             result_set = []
             while True:
-                result_type, result_data = l.result(result_id, 0)
-                if (result_data == []):
+                result_type, result_data = ldap_conn.result(result_id, 0)
+                if not result_data:
                     break
-                else:
-                    if result_type == ldap.RES_SEARCH_ENTRY:
-                        result_set.append(result_data)
+                if result_type == ldap.RES_SEARCH_ENTRY:
+                    result_set.append(result_data)
 
-            # list comprehension to get a list of user tupels in the format ("nickname", "nickname (real name)")
+            # list comprehension to get a list of user tupels in the
+            # format ("nickname", "nickname (real name)")
             userlist = [(
                 x[0][1]['uid'][0].decode(),
                 '%s (%s, %s)' % (
