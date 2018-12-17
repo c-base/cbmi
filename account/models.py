@@ -1,10 +1,21 @@
-from django.db import models
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+Django models
+"""
+
 from django.contrib.auth.models import User
+from django.db import models
 from django.db.models import signals
+
 from account.signals import create_profile, delete_profile
 
 
 class UserProfile(models.Model):
+    """
+    UserProfile to be attached to a django User model.
+    """
     user = models.OneToOneField(
         User,
         editable=False,
