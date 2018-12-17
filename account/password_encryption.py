@@ -8,6 +8,7 @@ from Crypto.Cipher import AES
 
 ENCRYPTED_LDAP_PASSWORD = 'encrypted_ldap_password'
 
+
 def encrypt_ldap_password(cleartext_pw):
     """
     Encrypts the cleartext_pw with a randomly generated key.
@@ -28,6 +29,7 @@ def encrypt_ldap_password(cleartext_pw):
     message = iv + aes.encrypt(cleartext_pw)
     return base64.b64encode(message).decode(), base64.b64encode(key).decode()
 
+
 def decrypt_ldap_password(message, key):
     """
     Takes an encrypted, base64 encoded password and the base64 encoded key.
@@ -47,6 +49,7 @@ def decrypt_ldap_password(message, key):
     cleartext_pw = aes.decrypt(ciphertext)
     return cleartext_pw
 
+
 def store_ldap_password(request, password):
     """
     Stores the password in an encrypted session storage and returns the key.
@@ -55,6 +58,7 @@ def store_ldap_password(request, password):
     request.session[ENCRYPTED_LDAP_PASSWORD] = encrypted_pw
     request.session.save()
     return key
+
 
 def get_ldap_password(request):
     cookies = request.COOKIES

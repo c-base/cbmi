@@ -6,7 +6,9 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
-from password_encryption import encrypt_ldap_password, decrypt_ldap_password
+from account.password_encryption import encrypt_ldap_password, \
+    decrypt_ldap_password
+
 
 class PasswordEncryptionTest(TestCase):
     """
@@ -21,7 +23,6 @@ class PasswordEncryptionTest(TestCase):
         message, key = self.encrypt_it()
         print('key:', key)
         print('message:', message)
-
 
     def test_decrypt_ldap_password(self):
         message, key = self.encrypt_it()
