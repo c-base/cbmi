@@ -1,12 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import ldap
-import copy
-
-from django.conf import settings
-from account.password_encryption import get_ldap_password
-
 """
 Example configuration:
 
@@ -14,12 +8,30 @@ CBASE_LDAP_URL = 'ldap://lea.cbrp3.c-base.org:389/'
 CBASE_BASE_DN = 'ou=crew,dc=c-base,dc=org'
 """
 
+import copy
+import logging
+
+from django.conf import settings
+
+import ldap
+
+from account.password_encryption import get_ldap_password
+
+LOGGER = logging.getLogger(__name__)
+
 
 def retrieve_member(request):
+    """
+    Gets a MemberValues object by its user name bound to a request object.
+    :param request:
+    :return: A MemberValues object
+    """
     ldap_password = get_ldap_password(request)
-    session = dict(request.session)
-    print("session:", session)
-    print("cookies:", request.COOKIES)
+    request_session = dict(request.session)
+
+    LOGGER.info("session: %s", request_session)
+    LOGGER.info("cookies: %s", request.COOKIES)
+
     return MemberValues(request.user.username, ldap_password)
 
 
@@ -29,6 +41,13 @@ class MemberValues(object):
     """
 
     def __init__(self, username, password):
+        """
+        Initializes a MemberValues object with all necessary parameters to
+        synchronize with an LDAP server.
+
+        :param username:
+        :param password:
+        """
         self._username = username
         self._password = password
         self._old = self._get_user_values()
@@ -38,6 +57,12 @@ class MemberValues(object):
         self._new = copy.deepcopy(self._old)
 
     def get(self, key, default=None):
+        """
+        Gets a member attribute value by key.
+        :param key:
+        :param default:
+        :return:
+        """
         value_list = self._new.get(key, default)
         if value_list:
             value = value_list[0]
@@ -56,13 +81,19 @@ class MemberValues(object):
             return value
 
     def set(self, key, value):
-        if value == None:
+        """
+        Sets a member attribute value for a key replacing the old value
+        :param key:
+        :param value:
+        :return:
+        """
+        if value is None:
             self._new[key] = [None]
             return
 
         converted_value = value
         if isinstance(value, bool):
-            if value == True:
+            if value:
                 converted_value = 'TRUE'
             else:
                 converted_value = 'FALSE'
@@ -73,12 +104,13 @@ class MemberValues(object):
         """
         Save the values back to the LDAP server.
         """
-        dn = "uid=%s,ou=crew,dc=c-base,dc=org" % self._username
+        user_dn = "uid=%s,ou=crew,dc=c-base,dc=org" % self._username
 
-        l = ldap.initialize(settings.CBASE_LDAP_URL)
-        l.simple_bind_s(dn, self._password)
+        session = ldap.initialize(settings.CBASE_LDAP_URL)
+        session.simple_bind_s(user_dn, self._password)
 
         mod_attrs = []
+        action = None
         for new_key, new_value in self._new.items():
             # Replace is the default.
             action = ldap.MOD_REPLACE
@@ -86,36 +118,41 @@ class MemberValues(object):
                 action = ldap.MOD_ADD
                 mod_attrs.append((action, '%s' % new_key, new_value))
                 continue
-            if self._old[new_key][0] != None and new_value == [None]:
+            if self._old.get(new_key, [None])[0] is not None \
+                    and new_value == [None]:
                 action = ldap.MOD_DELETE
                 mod_attrs.append((action, '%s' % new_key, []))
+                # Set the attribute and wait for the LDAP server to complete.
                 continue
-            # Set the attribute and wait for the LDAP server to complete.
-            if self._old[new_key][0] != new_value[0]:
+            if self._old.get(new_key, [None])[0] != new_value[0]:
                 action = ldap.MOD_REPLACE
                 mod_attrs.append((action, '%s' % new_key, new_value))
                 continue
 
-        print("modattrs: ", mod_attrs)
-        result = l.modify_s(dn, mod_attrs)
-        #
-        # print("result is: ", result)
-        l.unbind_s()
+        LOGGER.debug("action: %s modattrs: %s", action, mod_attrs)
+        result = session.modify_s(user_dn, mod_attrs)
+        LOGGER.debug("result is: %s", result)
+        session.unbind_s()
+        return result  # does not harm any1
 
     def change_password(self, new_password):
         """
         Change the password of the member.
         You do not need to call save() after calling change_password().
         """
-        l = ldap.initialize(settings.CBASE_LDAP_URL)
+        session = ldap.initialize(settings.CBASE_LDAP_URL)
         user_dn = self._get_bind_dn()
-        l.simple_bind_s(user_dn, self._password)
-        l.passwd_s(user_dn, self._password, new_password)
-        l.unbind_s()
+        session.simple_bind_s(user_dn, self._password)
+        session.passwd_s(user_dn, self._password, new_password)
+        session.unbind_s()
 
     def to_dict(self):
+        """
+        Converts a MembersValue object to a dict representation.
+        :return:
+        """
         result = {}
-        for key, value in self._new.items():
+        for key, _ in self._new.items():
             result[key] = self.get(key)
         return result
 
@@ -139,17 +176,22 @@ class MemberValues(object):
         session.simple_bind_s(self._get_bind_dn(), self._password)
 
         # Set the attribute and wait for the LDAP server to complete.
-        searchScope = ldap.SCOPE_SUBTREE
+        search_scope = ldap.SCOPE_SUBTREE
 
         # retrieve all attributes
-        retrieveAttributes = None
-        searchFilter = "uid=%s" % self._username
+        retrieve_attributes = None
+        search_filter = "uid=%s" % self._username
 
-        dn = settings.CBASE_BASE_DN
+        base_dn = settings.CBASE_BASE_DN
         result = session.search_s(
-            dn, searchScope, searchFilter, retrieveAttributes)
+            base_dn,
+            search_scope,
+            search_filter,
+            retrieve_attributes
+        )
+
         # TODO: latin1
-        print("result is: ", result)
+        LOGGER.info("result is: %s", result)
         # TODO: if len(result)==0
         session.unbind_s()
         return result[0][1]
@@ -159,11 +201,11 @@ class MemberValues(object):
         Change the password of the member.
         You do not need to call save() after calling change_password().
         """
-        l = ldap.initialize(settings.CBASE_LDAP_URL)
+        session = ldap.initialize(settings.CBASE_LDAP_URL)
         user_dn = self._get_bind_dn()
-        l.simple_bind_s(user_dn, self._password)
-        l.passwd_s(self._get_bind_dn(username), None, new_password)
-        l.unbind_s()
+        session.simple_bind_s(user_dn, self._password)
+        session.passwd_s(self._get_bind_dn(username), None, new_password)
+        session.unbind_s()
 
     def get_number_of_members(self):
         """
@@ -176,22 +218,26 @@ class MemberValues(object):
         Returns a list of strings with all usernames in the group 'crew'.
         The list is sorted alphabetically.
         """
-        l = ldap.initialize(settings.CBASE_LDAP_URL)
+        session = ldap.initialize(settings.CBASE_LDAP_URL)
         user_dn = self._get_bind_dn()
-        l.simple_bind_s(user_dn, self._password)
+        session.simple_bind_s(user_dn, self._password)
         try:
-            result_id = l.search(settings.CBASE_BASE_DN, ldap.SCOPE_SUBTREE,
-                                 "memberOf=cn=crew,ou=groups,dc=c-base,dc=org", None)
+            result_id = session.search(
+                settings.CBASE_BASE_DN,
+                ldap.SCOPE_SUBTREE,
+                "memberOf=cn=crew,ou=groups,dc=c-base,dc=org",
+                None
+            )
             result_set = []
             while True:
-                result_type, result_data = l.result(result_id, 0)
-                if (result_data == []):
+                result_type, result_data = session.result(result_id, 0)
+                if not result_data:
                     break
-                else:
-                    if result_type == ldap.RES_SEARCH_ENTRY:
-                        result_set.append(result_data)
+                if result_type == ldap.RES_SEARCH_ENTRY:
+                    result_set.append(result_data)
 
-            # list comprehension to get a list of user tupels in the format ("nickname", "nickname (real name)")
+            # list comprehension to get a list of user tupels in the
+            # format ("nickname", "nickname (real name)")
             userlist = [(
                 x[0][1]['uid'][0].decode(),
                 '%s (%s, %s)' % (
@@ -202,4 +248,5 @@ class MemberValues(object):
             ) for x in result_set]
             return sorted(userlist)
         except Exception:
+            LOGGER.exception('list_users failed')
             return []
