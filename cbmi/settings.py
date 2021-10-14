@@ -144,7 +144,7 @@ TEMPLATES = [
 import ldap
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
-AUTH_LDAP_SERVER_URI = "ldap://lea.cbrp3.c-base.org"
+AUTH_LDAP_SERVER_URI = "ldaps://lea.cbrp3.c-base.org"
 AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=crew,dc=c-base,dc=org"
 AUTH_LDAP_START_TLS = False
 AUTH_LDAP_BIND_AS_AUTHENTICATING_USER = True
