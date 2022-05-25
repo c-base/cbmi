@@ -1,10 +1,10 @@
-from jsonrpc import jsonrpc_method
+# from jsonrpc import jsonrpc_method
 
 TODO = [
     '',
 ]
 
-@jsonrpc_method("ping", authenticated=True)
+# @jsonrpc_method("ping", authenticated=True)
 def ping(request, username, password):
     """Ping - Echo Request
 
@@ -13,7 +13,7 @@ def ping(request, username, password):
     echo_response = "PONG"
     return echo_response
 
-@jsonrpc_method("todo")
+# @jsonrpc_method("todo")
 def todo(request):
     """Todo - List ToDo Items
 

@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
 import smbpasswd
@@ -123,7 +123,7 @@ def groups_list(request, group_name):
         is_ceymaster = True
     if 'ldap_admins' in [g.name for g in request.user.groups.all()]:
         is_admin = True
-    return render_to_response("group_list.html", locals())
+    return render(request, "group_list.html", locals())
 
 
 @login_required
