@@ -51,7 +51,7 @@ msgstr "WLAN-Präsenzerkennung einschalten"
 
 #: forms.py:68
 msgid "Old password"
-msgstr "Neues Passwort"
+msgstr "Altes Passwort"
 
 #: forms.py:69
 msgid "Enter your current password here."
