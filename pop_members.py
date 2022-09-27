@@ -55,7 +55,7 @@ def all_members():
 def populate_members():
     """fetch all members, sort them and populate the Django database"""
     for m in sorted(all_members()):
-        member = LDAPBackend().populate_user(m)
+        member = LDAPBackend().populate_user(m.decode())
         if member:
             print('Populated: %s' % member)
         else:

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import base64
+import os
 
 from Crypto import Random
 from Crypto.Cipher import AES
@@ -19,10 +20,11 @@ def encrypt_ldap_password(cleartext_pw):
     """
     # 16 bytes of key => AES-128
     random = Random.new()
-    key = random.read(16)
+    key = os.urandom(16)  # random.read(16)
+    
 
     # initialization vector
-    iv = random.read(16)
+    iv = os.urandom(16)  # random.read(16)
 
     # do the encryption
     aes = AES.new(key, AES.MODE_CFB, iv)

@@ -1,6 +1,4 @@
-from django.conf.urls import url
-# from jsonrpc import jsonrpc_site
-# from jsonrpc.views import browse
+from django.urls import re_path 
 from cbapi_ldap import views
 
 
