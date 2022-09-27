@@ -18,7 +18,7 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 
 import smbpasswd
-from account.cbase_members import retrieve_member, MemberValues
+from account.cbase_members import retrieve_member, MemberValues, get_ldap_admins
 from account.forms import GastroPinForm, WlanPresenceForm, LoginForm, \
     PasswordForm, RFIDForm, NRF24Form, SIPPinForm, CLabPinForm, AdminForm, \
     PreferredEmailForm
@@ -31,7 +31,8 @@ def landingpage(request):
     login_form = LoginForm()
     try:
         # just in case the group hasn't yet been synced
-        admins = Group.objects.get(name="ldap_admins").user_set.all()
+        # admins = Group.objects.filter(name__in=get_ldap_admins()).user_set.all()
+        admins = get_ldap_admins()
     except Exception:
         # else provide an emtpy list
         admins = []

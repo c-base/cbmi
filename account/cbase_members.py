@@ -250,3 +250,10 @@ class MemberValues(object):
         except Exception:
             LOGGER.exception('list_users failed')
             return []
+
+
+def get_ldap_admins():
+    session = ldap.initialize(settings.CBASE_LDAP_URL)
+    session.search('cn=ldap_admins,ou=groups,dc=c-base,dc=org', ldap.SCOPE_BASE)
+    result = session.result()
+    return [x.decode().split(',')[0].split('=')[1] for x in result[1][0][1].get('member')]
