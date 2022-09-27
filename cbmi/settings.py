@@ -5,7 +5,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('smile', 'smile@c-base.org')
+    # ('smile', 'smile@c-base.org')
     # ('Your Name', 'your_email@example.com'),
 )
 
@@ -146,7 +146,7 @@ TEMPLATES = [
 import ldap
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
-AUTH_LDAP_SERVER_URI = "ldap://lea.cbrp3.c-base.org"
+AUTH_LDAP_SERVER_URI = "ldaps://lea.cbrp3.c-base.org"
 AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=crew,dc=c-base,dc=org"
 AUTH_LDAP_START_TLS = True
 AUTH_LDAP_BIND_AS_AUTHENTICATING_USER = True
@@ -235,7 +235,7 @@ LOGGING = {
     'loggers': {
         'django.request': {
             'handlers': ['mail_admins'],
-            'level': 'ERROR',
+            'level': 'DEBUG',
             'propagate': True,
         },
         "django_auth_ldap": {"level": "DEBUG", "handlers": ["console"]}
@@ -245,7 +245,7 @@ LOGGING = {
 CRISPY_TEMPLATE_PACK = 'bootstrap'
 
 # c-base specific settings
-CBASE_LDAP_URL = 'ldap://lea.cbrp3.c-base.org:389/'
+CBASE_LDAP_URL = 'ldaps://lea.cbrp3.c-base.org:389/'
 CBASE_BASE_DN = 'ou=crew,dc=c-base,dc=org'
 
 # Set session cookie timeout to 10 minutes
