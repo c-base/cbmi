@@ -1,0 +1,7 @@
+Django<5
+django-auth-ldap
+django-crispy-forms
+gunicorn
+pycrypto
+passlib
+requests
