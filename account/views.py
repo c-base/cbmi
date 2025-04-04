@@ -87,7 +87,7 @@ def home(request):
     number_of_members = member.get_number_of_members()
     password = get_ldap_password(request)
     username = request.user.username
-    url = "https://vorstand.c-base.org/cteward-api/legacy/member/%s" % username
+    url = "https://vorstand.cbrp3.c-base.org/cteward-api/legacy/member/%s" % username
     cteward = None
     try:
         r = requests.get(

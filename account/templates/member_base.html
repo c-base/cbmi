@@ -28,13 +28,9 @@
             <li class="{% if request.path == clab_url %}active{% endif %}">
                 <a href="{{ clab_url }}">{% trans "Indoor-PIN" %}</a>
             </li>
-            {% url 'nrf24' as nrf24_url %}
-            <li class="{% if request.path == nrf24_url %}active{% endif %}">
-                <a href="{{ nrf24_url }}">{% trans "NRF24" %}</a>
-            </li>
-            {% url 'sippin' as sippin_url %}
-            <li class="{% if request.path == sippin_url %}active{% endif %}">
-                <a href="{{ sippin_url }}">{% trans "SIP-PIN" %}</a>
+            {% url 'memberstatus' as memberstatus_url %}
+            <li class="{% if request.path == memebrstatus_url %}active{% endif %}">
+                <a href="{{ memberstatus_url }}">{% trans "Memberstatus" %}</a>
             </li>
             {% url 'preferred_email' as preferred_email_url %}
             <li class="{% if request.path == preferred_email_url %}active{% endif %}">
@@ -54,7 +50,7 @@
 
     <hr />
     <div class="row pull-right">
-        <small class="muted">Copyright &copy; 2015 by c-base e.V.</small>
+        <small class="muted">Copyright &copy; 2025 by c-base e.V.</small>
     </div>
     </div><!-- /.container -->
 {% endblock body %}
