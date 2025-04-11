@@ -204,11 +204,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    # 'jsonrpc',     # STUBBED due to django-1.8.4 upgraded
-    'crispy_forms',
-    # 'cbmi',
+    "crispy_forms",
+    "crispy_bootstrap4",
     'account',
-    # 'cbapi_ldap',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -242,7 +240,8 @@ LOGGING = {
     }
 }
 
-CRISPY_TEMPLATE_PACK = 'bootstrap'
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+CRISPY_FAIL_SILENTLY = False
 
 # c-base specific settings
 CBASE_LDAP_URL = 'ldaps://lea.cbrp3.c-base.org:389/'

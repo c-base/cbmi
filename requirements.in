@@ -1,7 +1,12 @@
+crispy-bootstrap4
+cryptography
 Django<5
 django-auth-ldap
 django-crispy-forms
+django-bootstrap4
 gunicorn
-pycrypto
+# pycrypto
 passlib
+pytest
+pytest-django
 requests

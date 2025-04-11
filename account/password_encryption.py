@@ -4,8 +4,8 @@
 import base64
 import os
 
-from Crypto import Random
-from Crypto.Cipher import AES
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.backends import default_backend
 
 ENCRYPTED_LDAP_PASSWORD = 'encrypted_ldap_password'
 
@@ -18,17 +18,15 @@ def encrypt_ldap_password(cleartext_pw):
     The key is supposed to be stored into the 'session_key' cookie field we can
     later use it to decrypt the password and connect to the LDAP server with it.
     """
-    # 16 bytes of key => AES-128
-    random = Random.new()
-    key = os.urandom(16)  # random.read(16)
-    
+    key = os.urandom(16)  # 128-bit AES key
+    iv = os.urandom(16)   # 128-bit IV
 
-    # initialization vector
-    iv = os.urandom(16)  # random.read(16)
+    cipher = Cipher(algorithms.AES(key), modes.CFB(iv), backend=default_backend())
+    encryptor = cipher.encryptor()
 
-    # do the encryption
-    aes = AES.new(key, AES.MODE_CFB, iv)
-    message = iv + aes.encrypt(cleartext_pw.encode())
+    ciphertext = encryptor.update(cleartext_pw.encode()) + encryptor.finalize()
+
+    message = iv + ciphertext
     return base64.b64encode(message).decode(), base64.b64encode(key).decode()
 
 
@@ -40,16 +38,14 @@ def decrypt_ldap_password(message, key):
     decoded_message = base64.b64decode(message)
     decoded_key = base64.b64decode(key)
 
-    # first 16 bytes of the message are the initialization vector
     iv = decoded_message[:16]
-
-    # the rest is the encrypted password
     ciphertext = decoded_message[16:]
 
-    # decrypt it
-    aes = AES.new(decoded_key, AES.MODE_CFB, iv)
-    cleartext_pw = aes.decrypt(ciphertext).decode()
-    return cleartext_pw
+    cipher = Cipher(algorithms.AES(decoded_key), modes.CFB(iv), backend=default_backend())
+    decryptor = cipher.decryptor()
+
+    cleartext_pw = decryptor.update(ciphertext) + decryptor.finalize()
+    return cleartext_pw.decode()
 
 
 def store_ldap_password(request, password):
