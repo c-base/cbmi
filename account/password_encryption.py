@@ -4,7 +4,8 @@
 import base64
 import os
 
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms
+from cryptography.hazmat.decrepit.ciphers.modes import CFB
 from cryptography.hazmat.backends import default_backend
 
 ENCRYPTED_LDAP_PASSWORD = 'encrypted_ldap_password'
@@ -21,7 +22,7 @@ def encrypt_ldap_password(cleartext_pw):
     key = os.urandom(16)  # 128-bit AES key
     iv = os.urandom(16)   # 128-bit IV
 
-    cipher = Cipher(algorithms.AES(key), modes.CFB(iv), backend=default_backend())
+    cipher = Cipher(algorithms.AES(key), CFB(iv), backend=default_backend())
     encryptor = cipher.encryptor()
 
     ciphertext = encryptor.update(cleartext_pw.encode()) + encryptor.finalize()
@@ -41,7 +42,7 @@ def decrypt_ldap_password(message, key):
     iv = decoded_message[:16]
     ciphertext = decoded_message[16:]
 
-    cipher = Cipher(algorithms.AES(decoded_key), modes.CFB(iv), backend=default_backend())
+    cipher = Cipher(algorithms.AES(decoded_key), CFB(iv), backend=default_backend())
     decryptor = cipher.decryptor()
 
     cleartext_pw = decryptor.update(ciphertext) + decryptor.finalize()

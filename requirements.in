@@ -1,6 +1,6 @@
 crispy-bootstrap4
 cryptography
-Django<5
+Django>=6,<7
 django-auth-ldap
 django-crispy-forms
 django-bootstrap4

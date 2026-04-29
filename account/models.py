@@ -76,7 +76,7 @@ class UserProfile(models.Model):
     is_ceymaster = models.BooleanField(default=False, editable=False)
     is_soundlab_member = models.BooleanField(default=False, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return 'Profile: %s' % self.user.username
 
 
